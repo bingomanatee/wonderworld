@@ -1,0 +1,23 @@
+{
+  "name": "meta",
+  "description": "next-gen blog in react",
+  "main": "index.js",
+  "authors": [
+    "David Edelhart"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.wonderlandlabs.com",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/js/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "EaselJS": "easeljs#^0.8.2"
+  }
+}
