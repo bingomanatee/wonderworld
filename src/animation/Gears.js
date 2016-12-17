@@ -1,10 +1,10 @@
-const W = require('./points.json');
-import _ from 'lodash';
 import Point from 'point-geometry';
 import Gear from './Gear';
 import {HEIGHT_OF_SPOKE} from './GearShape';
 
-export default class Ani {
+import {Swatch} from './Swatch';
+
+export default class Gears {
   constructor(store, id) {
     this.init(store, id);
   }
@@ -12,26 +12,48 @@ export default class Ani {
   initCanvas() {
     let element = $(`#${this.id}`);
     const canvasId = `${this.id}_canvas`;
-    element.append(`<canvas id="${canvasId}" width="${this.width}" height="${this.height}"></canvas>`);
+    const bgCanvasId = `${this.id}_back`;
+
+    element.append(`<canvas id="${bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
+<canvas id="${canvasId}" class="background"  width="${this.width}" height="${this.height}"></canvas>`);
     const stage = new createjs.Stage(canvasId);
-    let back = new createjs.Shape();
-    back.graphics.beginFill('red').dr(0, 0, this.width, this.height);
-    stage.addChild(back);
-    this.fps = new createjs.Text('FPS', '20px Arial', 'white');
+   // this.fps = new createjs.Text('FPS', '20px Arial', 'white');
+    // this.fps.x = 50;
+    // this.fps.y = 30;
     stage.addChild(this.fps);
-    this.fps.x = 50;
-    this.fps.y = 30;
     this.canvas = stage;
+
+    this.background = new createjs.Stage(bgCanvasId);
   }
 
   init(store, id) {
     this.gearz = [];
     this.id = id;
     this.initCanvas();
+    this.initBackground();
 
     store.subscribe(() => {
       console.log('container data = ', props.store.getState());
     });
+  }
+
+  initBackground() {
+    this._swatches = [];
+    console.log('setting background');
+    let s = new createjs.Shape();
+    s.graphics
+      .beginFill('grey')
+      .drawRect(0, 0, this.width, this.height);
+
+    this.background.addChild(s);
+
+     const last = 40;
+     for (let i in _.range(0, last)){
+     this._swatches.push(new Swatch(this, i, last));
+     }
+
+    this.background.update();
+
   }
 
   _canvas
@@ -45,26 +67,23 @@ export default class Ani {
   }
 
   play() {
-    let gear = new Gear(this, this.width/2, this.height/2, 150)
-    let otherGear = gear.addGear(75, 45);
+    let letters = 'WonderlandLabs.com'.split('');
+    let targetWidth = this.width / (letters.length + 4);
+
+    let gear = Gear.makeSentence(this, letters, targetWidth);
+
+    gear.x = targetWidth;
+    gear.y = this.height / 2;
+
     this.gearz.push(gear);
     let count = 0;
     setInterval(() => {
-      let fps = count / 2;
-      this.fps.text = `FPS: ${fps} frames per second`;
+   //   let fps = count / 2;
+    //  this.fps.text = `FPS: ${fps} frames per second`;
       count = 0;
     }, 2000);
     let handleTick = (event) => {
-      let x = this.canvas.mouseX;
-      let y = this.canvas.mouseY;
-      let point = new Point(x, y);
-      let relPoint = point.sub(gear);
-      let desiredDistance = gear.radius + otherGear.radius + HEIGHT_OF_SPOKE;
-      let desiredRelPoint = relPoint.mult(desiredDistance/relPoint.mag());
-      otherGear.x = desiredRelPoint.x;
-      otherGear.y = desiredRelPoint.y;
       this.canvas.update();
-      ++count;
     }
     createjs.Ticker.framerate = 60;
     createjs.Ticker.addEventListener("tick", handleTick);

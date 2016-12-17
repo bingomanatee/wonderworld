@@ -8,7 +8,7 @@ function easeLinear(t, b, c, d) {
 export default class Gear extends Point {
   /**
    *
-   * @param ani {Ani}
+   * @param ani {Gears}
    * @param x
    * @param y
    * @param rad

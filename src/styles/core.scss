@@ -25,14 +25,18 @@ body {
 }
 
 
-
-#ani {
+canvas.background {
   left: 0;
   top: 0;
-  z-index: 10000;
   width: 100%;
-  position: absolute;
-  border: 1px solid blue;
   height: 100%;
+  position: absolute;
   overflow: hidden;
+}
+#ani {
+  z-index: 11000;
+}
+#ani_back {
+  z-index: -1000;
+  border: 2px solid red;
 }

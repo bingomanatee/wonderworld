@@ -3,35 +3,58 @@ import GearShape from './GearShape';
 import _ from 'lodash';
 import {DIST_BETWEEN_SPOKES, HEIGHT_OF_SPOKE} from './GearShape';
 import Color from 'color';
+import rebound from'rebound';
+
+let springSystem = new rebound.SpringSystem();
 
 import Point from 'point-geometry';
 
-const TRANSPORT_RATE = 0; // the circular distance every gear should go.
+const TRANSPORT_RATE = 100; // the circular distance every gear should go.
 // the larger the radius, the slower the rotation rate needed to achieve this rate.
 const RADIAN_CIRC = (Math.PI * 2);
+
+function _wholeRad(n) {
+  n = n % RADIAN_CIRC;
+  if (n < 0) {
+    n += RADIAN_CIRC;
+  }
+  return n;
+}
+function r(n) {
+  return Math.round(10 * n) / 10;
+}
+
+function _randScale(center, scale, min, max) {
+  let rand = (center || 0) + (scale || 1) * (_.random(-100, 100) + _.random(-100, 100)) / 400;
+  if (arguments.length > 2) {
+    rand = _.clamp(rand, min, max);
+  }
+  return rand;
+}
 
 export default class Gear extends Point {
 
   /**
    *
-   * @param ani {Ani}
-   * @param x
-   * @param y
-   * @param rad
+   * @param ani {Gears}
+   * @param x {number}
+   * @param y {number}
+   * @param rad {number}
+   * @param letter {String}
+   *
    */
-  constructor(ani, x, y, rad, offset) {
+  constructor(ani, x, y, rad, letter) {
     super(x, y);
     this._rad = rad;
     this._ani = ani;
     this.radius = rad;
-    this.offset = offset || 0;
+    this.letter = letter || '';
 
     this.anglesPerSecond = 360 * TRANSPORT_RATE / this.circumference;
-    this.color = Color.rgb(245, 245, 255);
-   // this.colorShadow = this.color.darken(0.25);
+    this.color = Color.rgb(_.random(150, 256), _.random(150, 256), _.random(150, 256));
+    // this.colorShadow = this.color.darken(0.25);
     this.initElement();
     this.initTimer();
-    this._sec = 0;
   }
 
   initElement() {
@@ -42,36 +65,11 @@ export default class Gear extends Point {
     this.element.y = this.y;
     this.ani.canvas.addChild(this.element);
     this.originShape = new createjs.Shape();
-    this.originShape.graphics.beginFill('yellow').drawCircle(0, 0, 5);
-    this.element.addChild(this.originShape);
-
-    this.angleLabel = new createjs.Text('angle', '20px Arial');
-    this.angleLabel.x = 5;
-    this.angleLabel.y = -5;
-    this.element.addChild(this.angleLabel);
-
-    this.angleFromOrigin = new createjs.Text('angle', '16px Arial');
-    this.angleFromOrigin.x = 5;
-    this.angleFromOrigin.y = 35;
-    this.element.addChild(this.angleFromOrigin);
-    
-    this.traversalText = new createjs.Text('angle', '16px Arial');
-    this.traversalText.x = 5;
-    this.traversalText.y = 55;
-    this.element.addChild(this.traversalText);
-
-    this.localTraversalSpot = new createjs.Shape();
-    this.drawTraversal();
-    this.element.addChild(this.localTraversalSpot);
-  }
-
-  drawTraversal() {
-    this.localTraversalSpot.graphics.clear()
-    .beginStroke('black')
-      .moveTo(0, 0)
-      .lineTo(this.radius, 0)
-      .arc(0, 0, this.radius, 0, this.localTraversalAngle * RADIAN_CIRC/360)
-      .lineTo(0,0);
+    this.letter = new createjs.Text(this.letter.toUpperCase(), `${this.radius}px Helvetica`);
+    this.letter.textAlign = 'center';
+    this.letter.textBaseline = 'middle';
+    this.letter.color = this.color;
+    this.element.addChild(this.letter);
   }
 
   initTimer() {
@@ -84,49 +82,69 @@ export default class Gear extends Point {
       } else {
         this.rotation = this.anglesPerSecond * seconds;
       }
-      if (true || (this._sec !== Math.floor(seconds))) {
-        this._sec = Math.floor(seconds);
-        this.angleLabel.text = `${Math.floor(this.rotation)} deg`;
-        this.angleFromOrigin.text = `${Math.floor(this.radiansFromOrigin * 360 / RADIAN_CIRC)} deg rot`;
-        this.traversalText.text = `${Math.floor(this.localTraversalAngle)} deg trav`;
-        this.drawTraversal();
-      }
     });
   }
 
-  addGear(radius, angle) {
+  addGear(radius, letter) {
+    let angle = Math.PI / 2 * _randScale();
     let radians = angle * Math.PI / 180;
     let distance = (this.radius + radius + HEIGHT_OF_SPOKE);
     let x = Math.cos(radians) * distance;
     let y = Math.sin(radians) * distance;
-    let other = new Gear(this.ani, x, y, radius);
+    let other = new Gear(this.ani, x, y, radius, letter);
+    other.springAngle(distance, angle + (Math.PI * _.random(-100, 100) / 200), angle);
     other.parentGear = this;
-    console.log('adding gear offset by ', x, y);
+
     this.childGears.push(other);
     this.element.addChild(other.element);
     return other;
   }
 
+  springAngle(distance, from, to) {
+    console.log('springing from ', distance, from, to);
+    this._spring = springSystem.createSpring(_randScale(1, 3, 0.1, 2) * 40, _randScale(1, 3, 0.1, 2) * 3);
+    this._spring.setEndValue(1);
+    this._spring.addListener({
+      onSpringUpdate: (spring) => {
+        let radians = (to * spring.getCurrentValue()) + (from * (1 - spring.getCurrentValue()));
+        this.x = this.element.x = Math.cos(radians) * distance;
+        this.y = this.element.y = Math.sin(radians) * distance;
+      },
+      onSpringEndStateChange: (spring) => {
+        console.log('ending at angle ', angle);
+      }
+    });
+  }
+
+  /* ------------ spoke rotation calculation ---------- */
+
+  get parentSpokeOffset() {
+    if (!this.parentGear) {
+      return 0;
+    }
+
+    let percentOfCircleAroundParent = this.radiansFromOrigin / RADIAN_CIRC;
+    return this.parentGear.spokeCount * percentOfCircleAroundParent + 0.5
+  }
+
+  get parentSpokeDegreeOffset() {
+    return this.parentSpokeOffset * this.degreesPerSpoke;
+  }
+
   setRotationFromParent() {
-    // eval('debugger');
-  //  let periodAngleAdd = 360 * DIST_BETWEEN_SPOKES / this.circumference;
-    this.rotation = this.parentGear.rotation * (-this.parentGear.radius / this.radius) + this.localTraversalAngle;
+    let relativeTraversal = -360 * this.parentGear.spokesTraversed / this.spokeCount;
+    this.rotation = 360 + this.parentSpokeDegreeOffset + this.degreesFromOrigin + relativeTraversal;
+  }
+
+  get degreesPerSpoke() {
+    return 360 / this.spokeCount;
   }
 
   /* ---------- properties ----------- */
 
+
   get spokeCount() {
     return this.gear.spokeCount;
-  }
-
-  get relativeTraversal () {
-    if (!this.parentGear) return 0;
-   return (this.radiansFromOrigin / RADIAN_CIRC) * this.parentGear.circumference;
-  }
-
-  get localTraversalAngle () {
-    if (!this.parentGear) return 180;
-    return 360 * this.relativeTraversal/this.circumference * this.parentGear.spokeCount / this.spokeCount;
   }
 
   _childGears
@@ -142,10 +160,6 @@ export default class Gear extends Point {
     return this.diameter * Math.PI;
   }
 
-  get cyclesDone() {
-    return this.rotation / 360;
-  }
-
   /**
    * angle travelled, in degrees
    * @returns {number}
@@ -154,13 +168,18 @@ export default class Gear extends Point {
     return this._rotation;
   }
 
+  /**
+   *
+   * @param r
+   */
   set rotation(r) {
     this._rotation = r;
     this.gear.shape.rotation = r;
+  //  this.letter.rotation = r;
   }
 
-  get diameter() {
-    return this.radius * 2;
+  get spokesTraversed() {
+    return this.rotation / 360 * this.spokeCount;
   }
 
   /**
@@ -170,18 +189,24 @@ export default class Gear extends Point {
    */
 
   get radiansFromOrigin() {
-    if (!this.parentGear) {
-      return 0;
-    }
-    return Math.atan2(this.y, this.x);
+    return this.parentGear ? _wholeRad(Math.atan2(this.y, this.x)) : 0;
+  }
+
+  get degreesFromOrigin() {
+    return 360 * this.radiansFromOrigin / RADIAN_CIRC;
   }
 
   /**
    *
    * @param value {float}
    */
-  set offset(value) {
-    this._offset = value;
+
+  get letter() {
+    return this._letter || '';
+  }
+
+  set letter(letter_value) {
+    this._letter = letter_value;
   }
 
   get ani() {
@@ -209,6 +234,10 @@ export default class Gear extends Point {
     this._radius = value;
   }
 
+  get diameter() {
+    return this.radius * 2;
+  }
+
   get circumference() {
     return this.radius * 2 * Math.PI;
   }
@@ -221,5 +250,20 @@ export default class Gear extends Point {
 
   set parentGear(value) {
     this._parentGear = value;
+  }
+
+  get spokeCount() {
+    return Math.round(this.circumference / DIST_BETWEEN_SPOKES);
+  }
+
+  static makeSentence(ani, letters, targetWidth) {
+    let firstGear = new Gear(ani, 0, 0, Math.max(20, _randScale(1, 1.5) * targetWidth / 2), letters.shift());
+    let lastGear = firstGear;
+    while (letters.length) {
+      lastGear = lastGear.addGear(Math.max(20, _randScale(1, 1.5) * targetWidth / 2), letters.shift());
+      ani.gearz.push(lastGear);
+    }
+
+    return firstGear;
   }
 }

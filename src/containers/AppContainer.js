@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import {browserHistory, Router} from 'react-router';
 import {Provider} from 'react-redux';
 
-import Ani from '../animation/Gears';
+import Gears from '../animation/Gears';
 
 class AppContainer extends Component {
   static propTypes = {
@@ -16,7 +16,7 @@ class AppContainer extends Component {
 
   componentDidMount() {
     if (typeof window !== 'undefined') {
-      this.ani = new Ani(this.props.store, 'ani');
+      this.ani = new Gears(this.props.store, 'ani');
       this.ani.play();
     }
   }
