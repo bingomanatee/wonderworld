@@ -24,7 +24,6 @@ body {
   box-sizing: inherit;
 }
 
-
 canvas.background {
   left: 0;
   top: 0;
@@ -39,4 +38,32 @@ canvas.background {
 #ani_back {
   z-index: -1000;
   border: 2px solid red;
+}
+
+#ani-letters {
+  position: absolute;
+  height: 0;
+  width: 0;
+  left: 0;
+  top: 0;
+  overflow: visible;
+}
+
+.wll-letter {
+  font-family: AnyMale, Helvetica;
+  position: absolute;
+  white-space: nowrap;
+  width: 200px;
+  height: 200px;
+  background-color: 'red';
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wll-letter__character {
+  flex-basis: auto;
+  font-size: 20rem;
 }

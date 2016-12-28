@@ -10,12 +10,11 @@ export default class Gears {
   }
 
   initCanvas() {
-    let element = $(`#${this.id}`);
+    this.canvasElement = $(`#${this.id}`);
     const canvasId = `${this.id}_canvas`;
     const bgCanvasId = `${this.id}_back`;
-
-    element.append(`<canvas id="${bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
-<canvas id="${canvasId}" class="background"  width="${this.width}" height="${this.height}"></canvas>`);
+    this.canvasElement.append(`<canvas id="${bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
+<canvas id="${canvasId}" class="background"  width="${this.width}" height="${this.height}"></canvas><div id="ani-letters"></div>`);
     const stage = new createjs.Stage(canvasId);
    // this.fps = new createjs.Text('FPS', '20px Arial', 'white');
     // this.fps.x = 50;
@@ -24,6 +23,16 @@ export default class Gears {
     this.canvas = stage;
 
     this.background = new createjs.Stage(bgCanvasId);
+  }
+
+  _canvasElement
+
+  get canvasElement() {
+    return this._canvasElement;
+  }
+
+  set canvasElement(value) {
+    this._canvasElement = value;
   }
 
   init(store, id) {

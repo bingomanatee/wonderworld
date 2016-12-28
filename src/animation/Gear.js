@@ -4,7 +4,7 @@ import {DIST_BETWEEN_SPOKES, HEIGHT_OF_SPOKE} from './GearShape';
 import Color from 'color';
 import rebound from'rebound';
 import {a2r, r2a, RADIAN_CIRC, rr, r, _wholeAngle, _wholeRad, rra, drawArc} from './angleUtils';
-
+import LetterDiv from './LetterDiv';
 let springSystem = new rebound.SpringSystem();
 
 import Point from 'point-geometry';
@@ -55,12 +55,14 @@ export default class Gear extends Point {
     this.element.x = this.x;
     this.element.y = this.y;
     this.ani.canvas.addChild(this.element);
-    this.letterShape = new createjs.Text(this.letter.toUpperCase(), `${this.radius}px Helvetica`);
+  /*  this.letterShape = new createjs.Text(this.letter.toUpperCase(), `${this.radius}px Helvetica`);
     this.letterShape.textAlign = 'center';
     this.letterShape.textBaseline = 'middle';
     this.letterShape.color = this.color;
-    this.gearContainer.addChild(this.letterShape);
+    this.gearContainer.addChild(this.letterShape);*/
     // this.element.addChild(_makeAxis());
+
+    this.letterDiv = new LetterDiv(this.ani, this.letter, this.radius, this.color);
 
     this.syncGear();
   }
@@ -81,6 +83,8 @@ export default class Gear extends Point {
     let p = this.element.localToGlobal(0, 0);
     this.gearContainer.x = p.x;
     this.gearContainer.y = p.y;
+    this.letterDiv.x = p.x;
+    this.letterDiv.y = p.y;
   }
 
   addGear(radius, letter, targetAngle) {
@@ -92,17 +96,17 @@ export default class Gear extends Point {
     other.jointRotation = initialAngle;
     this.element.addChild(other.parentJoint);
 
- /*   let pinkArrow = new createjs.Shape();
-    pinkArrow.graphics.beginStroke('magenta')
-      .setStrokeStyle(2)
-      .mt(0, 0)
-      .lt(200, 0)
-      .lt(190, 10)
-      .mt(200, 0)
-      .lt(190, -10);
-  other.parentJoint.addChild(pinkArrow);
+    /*   let pinkArrow = new createjs.Shape();
+     pinkArrow.graphics.beginStroke('magenta')
+     .setStrokeStyle(2)
+     .mt(0, 0)
+     .lt(200, 0)
+     .lt(190, 10)
+     .mt(200, 0)
+     .lt(190, -10);
+     other.parentJoint.addChild(pinkArrow);
 
-      */
+     */
     other.springAngle(0, targetAngle);
     return other;
   }
@@ -217,8 +221,8 @@ export default class Gear extends Point {
 
   setRotationFromParent() {
     let parentSpokesToTangent;
-   // this.drawParentArc();
-   // this.drawArcToParent();
+    // this.drawParentArc();
+    // this.drawArcToParent();
     if (!isNaN(this.rotation)) {
       parentSpokesToTangent = this.parentGear.spokesAt(this.degreesFromParent - this.parentGear.rotation);
       let netRotation = this.degreesToParent + (0.5 + parentSpokesToTangent) * this.degreesPerSpoke;
