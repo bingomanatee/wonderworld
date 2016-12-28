@@ -1,13 +1,19 @@
-export const DIST_BETWEEN_SPOKES = 10;
+/*
+ export const DIST_BETWEEN_SPOKES = 10;
+ const SPOKE_ANGLE_DEG = 40;
+ export const HEIGHT_OF_SPOKE = 8; // radial distance of spoke from edge of gear;
+ const RING_HEIGHT = 3;
+ */
+export const DIST_BETWEEN_SPOKES = 30;
+const SPOKE_ANGLE_DEG = 40;
+export const HEIGHT_OF_SPOKE = 15; // radial distance of spoke from edge of gear;
+const RING_HEIGHT = 8;
 
 const SPOKE_WIDTH = DIST_BETWEEN_SPOKES / 2; // size of spoke tangent to gear
 const SPOKE_Y = -SPOKE_WIDTH / 2;
-export const HEIGHT_OF_SPOKE = 8; // radial distance of spoke from edge of gear;
-const SPOKE_ANGLE_DEG = 40;
 const SPOKE_ANGLE = SPOKE_ANGLE_DEG * Math.PI / 180;
 const HEIGHT_INSET = (HEIGHT_OF_SPOKE / 2) * Math.sin(SPOKE_ANGLE);
 const SPOKE_Y_TOP = SPOKE_Y + HEIGHT_INSET;
-const RING_HEIGHT = 3;
 
 const circle = (shape, r, x, y, cc) => {
   shape.graphics.arc(x || 0, y || 0, r, 0, Math.PI * 2, !!cc);
@@ -47,14 +53,45 @@ export default class GearShape {
       let spokeShape = new createjs.Shape();
       spokeShape.x = spokeShape.y = OFFSET;
       spokeShape.graphics.f(this.rgb)
-        .mt(this.gear.radius - RING_HEIGHT * 1.125, SPOKE_Y)
+        .mt(this.gear.radius - RING_HEIGHT /2, SPOKE_Y)
         .lt(this.gear.radius + HEIGHT_OF_SPOKE, SPOKE_Y_TOP)
         .lt(this.gear.radius + HEIGHT_OF_SPOKE, -SPOKE_Y_TOP)
-        .lt(this.gear.radius - RING_HEIGHT * 1.125, -SPOKE_Y)
+        .lt(this.gear.radius - RING_HEIGHT /2, -SPOKE_Y)
         .ef();
       spokeShape.rotation = angle;
       this.stage.addChild(spokeShape);
     }
+/*
+    let startCircle = new createjs.Shape();
+    startCircle.graphics.f('orange')
+      .drawCircle(OFFSET + this.gear.radius, OFFSET, 3)
+      .beginStroke('orange')
+      .setStrokeStyle(5)
+      .mt(OFFSET, OFFSET)
+      .lt(OFFSET + this.gear.radius, OFFSET);
+    this.stage.addChild(startCircle);*/
+
+/*    let axis = new createjs.Shape();
+    axis.x = OFFSET;
+    axis.y = OFFSET;
+    axis.graphics
+      .beginStroke('red')
+      .setStrokeStyle(4)
+      .arc(0, 0, 60, 0, Math.PI / 2)
+      .endStroke()
+      .beginStroke('green')
+      .setStrokeStyle(4)
+      .arc(0, 0, 60, Math.PI / 2, Math.PI)
+      .endStroke()
+      .beginStroke('blue')
+      .setStrokeStyle(4)
+      .arc(0, 0, 60, Math.PI, Math.PI * 1.5)
+      .endStroke()
+      .beginStroke('yellow')
+      .setStrokeStyle(4)
+      .arc(0, 0, 60, Math.PI * 1.5, 2 * Math.PI)
+      .endStroke();
+    this.stage.addChild(axis);*/
 
     this.stage.update();
 

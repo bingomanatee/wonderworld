@@ -1,28 +1,16 @@
-import gearData from './gear.json';
 import GearShape from './GearShape';
 import _ from 'lodash';
 import {DIST_BETWEEN_SPOKES, HEIGHT_OF_SPOKE} from './GearShape';
 import Color from 'color';
 import rebound from'rebound';
+import {a2r, r2a, RADIAN_CIRC, rr, r, _wholeAngle, _wholeRad, rra, drawArc} from './angleUtils';
 
 let springSystem = new rebound.SpringSystem();
 
 import Point from 'point-geometry';
 
-const TRANSPORT_RATE = 100; // the circular distance every gear should go.
+let TRANSPORT_RATE = 100; // the circular distance every gear should go.
 // the larger the radius, the slower the rotation rate needed to achieve this rate.
-const RADIAN_CIRC = (Math.PI * 2);
-
-function _wholeRad(n) {
-  n = n % RADIAN_CIRC;
-  if (n < 0) {
-    n += RADIAN_CIRC;
-  }
-  return n;
-}
-function r(n) {
-  return Math.round(10 * n) / 10;
-}
 
 function _randScale(center, scale, min, max) {
   let rand = (center || 0) + (scale || 1) * (_.random(-100, 100) + _.random(-100, 100)) / 400;
@@ -33,7 +21,6 @@ function _randScale(center, scale, min, max) {
 }
 
 export default class Gear extends Point {
-
   /**
    *
    * @param ani {Gears}
@@ -49,6 +36,7 @@ export default class Gear extends Point {
     this._ani = ani;
     this.radius = rad;
     this.letter = letter || '';
+    this._rotation = 0;
 
     this.anglesPerSecond = 360 * TRANSPORT_RATE / this.circumference;
     this.color = Color.rgb(_.random(150, 256), _.random(150, 256), _.random(150, 256));
@@ -60,16 +48,21 @@ export default class Gear extends Point {
   initElement() {
     this.gear = new GearShape(this, this.color);
     this.element = new createjs.Container();
-    this.element.addChild(this.gear.shape);
+    this.gearContainer = new createjs.Container();
+    this.gearContainer.addChild(this.gear.shape);
+    this.ani.canvas.addChild(this.gearContainer);
+
     this.element.x = this.x;
     this.element.y = this.y;
     this.ani.canvas.addChild(this.element);
-    this.originShape = new createjs.Shape();
-    this.letter = new createjs.Text(this.letter.toUpperCase(), `${this.radius}px Helvetica`);
-    this.letter.textAlign = 'center';
-    this.letter.textBaseline = 'middle';
-    this.letter.color = this.color;
-    this.element.addChild(this.letter);
+    this.letterShape = new createjs.Text(this.letter.toUpperCase(), `${this.radius}px Helvetica`);
+    this.letterShape.textAlign = 'center';
+    this.letterShape.textBaseline = 'middle';
+    this.letterShape.color = this.color;
+    this.gearContainer.addChild(this.letterShape);
+    // this.element.addChild(_makeAxis());
+
+    this.syncGear();
   }
 
   initTimer() {
@@ -77,63 +70,166 @@ export default class Gear extends Point {
       let seconds = event.time / 1000;
       this.element.x = this.x;
       this.element.y = this.y;
-      if (this.parentGear) {
-        this.setRotationFromParent();
-      } else {
+      if (!this.parentGear) {
         this.rotation = this.anglesPerSecond * seconds;
       }
+      this.syncGear();
     });
   }
 
-  addGear(radius, letter) {
-    let angle = Math.PI / 2 * _randScale();
-    let radians = angle * Math.PI / 180;
-    let distance = (this.radius + radius + HEIGHT_OF_SPOKE);
-    let x = Math.cos(radians) * distance;
-    let y = Math.sin(radians) * distance;
-    let other = new Gear(this.ani, x, y, radius, letter);
-    other.springAngle(distance, angle + (Math.PI * _.random(-100, 100) / 200), angle);
-    other.parentGear = this;
+  syncGear() {
+    let p = this.element.localToGlobal(0, 0);
+    this.gearContainer.x = p.x;
+    this.gearContainer.y = p.y;
+  }
 
+  addGear(radius, letter, targetAngle) {
+    let initialAngle = targetAngle + 30 * _randScale();
+    let other = new Gear(this.ani, 0, 0, radius, letter);
+    other.parentGear = this;
     this.childGears.push(other);
-    this.element.addChild(other.element);
+
+    other.jointRotation = initialAngle;
+    this.element.addChild(other.parentJoint);
+
+ /*   let pinkArrow = new createjs.Shape();
+    pinkArrow.graphics.beginStroke('magenta')
+      .setStrokeStyle(2)
+      .mt(0, 0)
+      .lt(200, 0)
+      .lt(190, 10)
+      .mt(200, 0)
+      .lt(190, -10);
+  other.parentJoint.addChild(pinkArrow);
+
+      */
+    other.springAngle(0, targetAngle);
     return other;
   }
 
-  springAngle(distance, from, to) {
-    console.log('springing from ', distance, from, to);
-    this._spring = springSystem.createSpring(_randScale(1, 3, 0.1, 2) * 40, _randScale(1, 3, 0.1, 2) * 3);
+  springAngle(from, to) {
+    this._spring = springSystem.createSpring(1, 0.1);
     this._spring.setEndValue(1);
     this._spring.addListener({
       onSpringUpdate: (spring) => {
-        let radians = (to * spring.getCurrentValue()) + (from * (1 - spring.getCurrentValue()));
-        this.x = this.element.x = Math.cos(radians) * distance;
-        this.y = this.element.y = Math.sin(radians) * distance;
+        this.jointRotation = (to * spring.getCurrentValue()) + (from * (1 - spring.getCurrentValue()));
       },
       onSpringEndStateChange: (spring) => {
-        console.log('ending at angle ', angle);
+        console.log('ending at angle ', this.radiansFromParent);
       }
     });
   }
 
   /* ------------ spoke rotation calculation ---------- */
 
-  get parentSpokeOffset() {
+  _parentJoint
+
+  get parentJoint() {
+    if (!this._parentJoint) {
+      this._parentJoint = new createjs.Container();
+      let mid = new createjs.Container();
+      mid.x = this.distanceFromParent;
+      this._parentJoint.addChild(mid);
+      mid.addChild(this.element);
+    }
+    return this._parentJoint;
+  }
+
+  get distanceFromParent() {
+    return (this.radius + this.parentGear.radius + HEIGHT_OF_SPOKE);
+  }
+
+  get jointRotation() {
+    if (!this.parentGear) {
+      return 0;
+    }
+    return this.parentJoint.rotation;
+  }
+
+  set jointRotation(angle) {
+    this.parentJoint.rotation = angle;
+  }
+
+  get absPosition() {
+    let p = this.gearContainer.localToGlobal(0, 0);
+    return new Point(p.x, p.y);
+  }
+
+  get degreesFromParent() {
     if (!this.parentGear) {
       return 0;
     }
 
-    let percentOfCircleAroundParent = this.radiansFromOrigin / RADIAN_CIRC;
-    return this.parentGear.spokeCount * percentOfCircleAroundParent + 0.5
+    let parentPoint = this.parentGear.absPosition;
+    let thisPoint = this.absPosition;
+    let v = thisPoint.sub(parentPoint);
+
+    return r2a(Math.atan2(v.y, v.x));
   }
 
-  get parentSpokeDegreeOffset() {
-    return this.parentSpokeOffset * this.degreesPerSpoke;
+  get degreesToParent() {
+    return (this.degreesFromParent + 180) % 360;
+  }
+
+  spokesAt(angle) {
+    return this.spokeCount * angle / 360;
+  }
+
+  drawParentArc() {
+    if (!this.parentGear) {
+      return;
+    }
+    if (!this.parentArc) {
+      this.parentArc = new createjs.Container();
+      this.ani.canvas.addChild(this.parentArc);
+    }
+    let p = this.parentGear.absPosition;
+    this.parentArc.x = p.x;
+    this.parentArc.y = p.y;
+
+    drawArc(this.parentArc,
+      this.parentGear.rotation,
+      this.degreesFromParent,
+      this.parentGear.degreesPerSpoke,
+      'yellow',
+      this.parentGear.radius / 2);
+  }
+
+  drawArcToParent() {
+    if (!this.parentGear) {
+      return;
+    }
+    if (!this.myArc) {
+      this.myArc = new createjs.Container();
+      this.ani.canvas.addChild(this.myArc);
+    }
+    let p = this.absPosition;
+    this.myArc.x = p.x;
+    this.myArc.y = p.y;
+
+    drawArc(this.myArc,
+      0,
+      this.degreesToParent,
+      this.degreesPerSpoke,
+      'white',
+      this.radius * 0.75);
   }
 
   setRotationFromParent() {
-    let relativeTraversal = -360 * this.parentGear.spokesTraversed / this.spokeCount;
-    this.rotation = 360 + this.parentSpokeDegreeOffset + this.degreesFromOrigin + relativeTraversal;
+    let parentSpokesToTangent;
+   // this.drawParentArc();
+   // this.drawArcToParent();
+    if (!isNaN(this.rotation)) {
+      parentSpokesToTangent = this.parentGear.spokesAt(this.degreesFromParent - this.parentGear.rotation);
+      let netRotation = this.degreesToParent + (0.5 + parentSpokesToTangent) * this.degreesPerSpoke;
+      if (isNaN(netRotation)) {
+        console.log('bad calculus: stopping set of rotation for ', this.letter);
+      } else {
+        this.rotation = netRotation;
+      }
+    } else {
+      console.log('skipping parent rotation set for ', this.letter, this.parentGear);
+    }
   }
 
   get degreesPerSpoke() {
@@ -141,7 +237,6 @@ export default class Gear extends Point {
   }
 
   /* ---------- properties ----------- */
-
 
   get spokeCount() {
     return this.gear.spokeCount;
@@ -173,27 +268,15 @@ export default class Gear extends Point {
    * @param r
    */
   set rotation(r) {
+    if (isNaN(r)) {
+      console.log('non number rotation for ', this.letter, r);
+    }
+
     this._rotation = r;
     this.gear.shape.rotation = r;
-  //  this.letter.rotation = r;
-  }
-
-  get spokesTraversed() {
-    return this.rotation / 360 * this.spokeCount;
-  }
-
-  /**
-   * a value from 0 to 1 that indicates how advanced in the rotation cycle
-   * the gear is; used to tune the gears' rotation with other gears.
-   * @returns {number}
-   */
-
-  get radiansFromOrigin() {
-    return this.parentGear ? _wholeRad(Math.atan2(this.y, this.x)) : 0;
-  }
-
-  get degreesFromOrigin() {
-    return 360 * this.radiansFromOrigin / RADIAN_CIRC;
+    for (let child of this.childGears) {
+      child.setRotationFromParent();
+    }
   }
 
   /**
@@ -201,11 +284,11 @@ export default class Gear extends Point {
    * @param value {float}
    */
 
-  get letter() {
+  get letterShape() {
     return this._letter || '';
   }
 
-  set letter(letter_value) {
+  set letterShape(letter_value) {
     this._letter = letter_value;
   }
 
@@ -259,8 +342,12 @@ export default class Gear extends Point {
   static makeSentence(ani, letters, targetWidth) {
     let firstGear = new Gear(ani, 0, 0, Math.max(20, _randScale(1, 1.5) * targetWidth / 2), letters.shift());
     let lastGear = firstGear;
+    let netAngle = 0;
     while (letters.length) {
-      lastGear = lastGear.addGear(Math.max(20, _randScale(1, 1.5) * targetWidth / 2), letters.shift());
+      let targetAngle = _randScale(netAngle, 180, -90, 90);
+      netAngle -= targetAngle;
+      let radius = _randScale(targetWidth / 2, targetWidth * 3, 80, 150);
+      lastGear = lastGear.addGear(radius, letters.shift(), targetAngle);
       ani.gearz.push(lastGear);
     }
 

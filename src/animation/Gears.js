@@ -67,7 +67,7 @@ export default class Gears {
   }
 
   play() {
-    let letters = 'WonderlandLabs.com'.split('');
+    let letters = 'Wonderland'.split('');
     let targetWidth = this.width / (letters.length + 4);
 
     let gear = Gear.makeSentence(this, letters, targetWidth);
