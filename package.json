@@ -76,6 +76,8 @@
   "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
   "license": "MIT",
   "dependencies": {
+    "@bockit/hex-coordinates": "0.0.1",
+    "@bockit/hex-round": "^1.0.1",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -95,6 +97,7 @@
     "fabric": "^1.7.1",
     "file-loader": "^0.9.0",
     "fs-extra": "^1.0.0",
+    "hex-grid": "^2.0.2",
     "html-webpack-plugin": "^2.22.0",
     "imports-loader": "^0.6.5",
     "ip": "^1.1.2",

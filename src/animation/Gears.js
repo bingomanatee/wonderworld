@@ -1,6 +1,7 @@
 import Point from 'point-geometry';
 import Gear from './Gear';
 import {HEIGHT_OF_SPOKE} from './GearShape';
+import PageBackground from './PageBackground';
 
 import {Swatch} from './Swatch';
 
@@ -12,17 +13,9 @@ export default class Gears {
   initCanvas() {
     this.canvasElement = $(`#${this.id}`);
     const canvasId = `${this.id}_canvas`;
-    const bgCanvasId = `${this.id}_back`;
-    this.canvasElement.append(`<canvas id="${bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
+    this.canvasElement.append(`<canvas id="${this.bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
 <canvas id="${canvasId}" class="background"  width="${this.width}" height="${this.height}"></canvas><div id="ani-letters"></div>`);
-    const stage = new createjs.Stage(canvasId);
-   // this.fps = new createjs.Text('FPS', '20px Arial', 'white');
-    // this.fps.x = 50;
-    // this.fps.y = 30;
-    stage.addChild(this.fps);
-    this.canvas = stage;
-
-    this.background = new createjs.Stage(bgCanvasId);
+    this.canvas = new createjs.Stage(canvasId);
   }
 
   _canvasElement
@@ -39,11 +32,16 @@ export default class Gears {
     this.gearz = [];
     this.id = id;
     this.initCanvas();
-    this.initBackground();
 
     store.subscribe(() => {
       console.log('container data = ', props.store.getState());
     });
+
+    this.background = new PageBackground(this.bgCanvasId);
+  }
+
+  get bgCanvasId() {
+    return `${this.id}_back`;
   }
 
   initBackground() {
@@ -87,8 +85,6 @@ export default class Gears {
     this.gearz.push(gear);
     let count = 0;
     setInterval(() => {
-   //   let fps = count / 2;
-    //  this.fps.text = `FPS: ${fps} frames per second`;
       count = 0;
     }, 2000);
     let handleTick = (event) => {

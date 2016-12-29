@@ -46,7 +46,7 @@ export default class Gear extends Point {
   }
 
   initElement() {
-    this.gear = new GearShape(this, this.color);
+    this.gear = new GearShape(this, 'black');
     this.element = new createjs.Container();
     this.gearContainer = new createjs.Container();
     this.gearContainer.addChild(this.gear.shape);
