@@ -1,18 +1,56 @@
 import Point from 'point-geometry';
 import Gear from './Gear';
 import PageBackground from './PageBackground';
+import _ from 'lodash';
 
 export default class Gears {
   constructor(store, id) {
     this.init(store, id);
+    this.initCanvas();
+    $(window).resize(_.debounce(() => {
+      this.initCanvas();
+    }, 500));
   }
 
   initCanvas() {
     this.canvasElement = $(`#${this.id}`);
+    this.canvasElement.empty();
     const canvasId = `${this.id}_canvas`;
-    this.canvasElement.append(`<canvas id="${this.bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
-<canvas id="${canvasId}" class="background"  width="${this.width}" height="${this.height}"></canvas><div id="ani-letters"></div>`);
+    this.canvasElement.append(`
+<div id="background_canvases">
+<canvas id="${this.bgCanvasId}" class="background" width="${this.width}" height="${this.height}"></canvas>
+<canvas id="${this.bgCanvasIdCrawl}" class="background" width="${this.width}" height="${this.height}"></canvas>
+<canvas id="${this.bgCanvasId2}" class="background" width="${this.width}" height="${this.height}"></canvas>
+<canvas id="${canvasId}" class="background"  width="${this.width}" height="${this.height}"></canvas>
+</div>
+<div id="ani-letters"></div>
+`);
     this.canvas = new createjs.Stage(canvasId);
+    if (this.background) {
+      this.background.destroy();
+    }
+    this.background = new PageBackground(this, this.bgCanvasId, this.bgCanvasIdCrawl, this.bgCanvasId2);
+
+    let letters = 'Wonderland Labs'.split('');
+    let targetWidth = this.width / ((letters.length + 4));
+
+    let gear = Gear.makeSentence(this, letters, targetWidth);
+    gear.x = targetWidth;
+    gear.y = targetWidth * 1.5;
+
+    let gears = gear.getAllGears();
+
+    let minY = _(gears)
+      .map((gear) => gear.parentJoint ? gear.parentJoint.localToGlobal(0, 0).y : 1000)
+      .compact()
+      .min();
+
+    if (minY < targetWidth / 2) {
+      let gap = targetWidth - minY;
+      gear.y = gap;
+    }
+
+    this.gearz.push(gear);
   }
 
   _canvasElement
@@ -28,36 +66,32 @@ export default class Gears {
   init(store, id) {
     this.gearz = [];
     this.id = id;
-    this.initCanvas();
-
     store.subscribe(() => {
       console.log('container data = ', props.store.getState());
     });
 
-    this.background = new PageBackground(this.bgCanvasId);
+    let handleTick = (event) => {
+      if (this.canvas) {
+        this.canvas.update();
+      }
+      if (this.background) {
+        this.background.update(event);
+      }
+    }
+    createjs.Ticker.framerate = 60;
+    createjs.Ticker.addEventListener("tick", handleTick);
   }
 
   get bgCanvasId() {
     return `${this.id}_back`;
   }
 
-  initBackground() {
-    this._swatches = [];
-    console.log('setting background');
-    let s = new createjs.Shape();
-    s.graphics
-      .beginFill('grey')
-      .drawRect(0, 0, this.width, this.height);
+  get bgCanvasIdCrawl() {
+    return `${this.id}_back_crawl`;
+  }
 
-    this.background.addChild(s);
-
-    const last = 40;
-    for (let i in _.range(0, last)) {
-      this._swatches.push(new Swatch(this, i, last));
-    }
-
-    this.background.update();
-
+  get bgCanvasId2() {
+    return `${this.id}_back_2`;
   }
 
   _canvas
@@ -68,46 +102,6 @@ export default class Gears {
 
   set canvas(value) {
     this._canvas = value;
-  }
-
-  play() {
-    let letters = 'Wonderland Labs'.split('');
-    let targetWidth = this.width / ((letters.length + 4));
-
-    let gear = Gear.makeSentence(this, letters, targetWidth);
-
-    gear.x = targetWidth;
-    gear.y = targetWidth * 1.5;
-
-    let gears = gear.getAllGears();
-    console.log('gears:', gears);
-
-    let minY = _(gears)
-      .map((gear) =>  gear.parentJoint ? gear.parentJoint.localToGlobal(0,0).y: 1000)
-      .compact()
-      .min();
-    console.log('min y:', minY);
-
-    let maxX = _(gears)
-      .map((gear) =>  gear.parentJoint ? gear.parentJoint.localToGlobal(0,0).x: 1000)
-      .compact()
-      .max();
-
-    if(minY < targetWidth/2) {
-      let gap = targetWidth - minY;
-      gear.y = gap;
-    }
-
-    this.gearz.push(gear);
-    let count = 0;
-    setInterval(() => {
-      count = 0;
-    }, 2000);
-    let handleTick = (event) => {
-      this.canvas.update();
-    }
-    createjs.Ticker.framerate = 60;
-    createjs.Ticker.addEventListener("tick", handleTick);
   }
 
   get gearz() {

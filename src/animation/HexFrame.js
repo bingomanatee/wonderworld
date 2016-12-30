@@ -116,8 +116,7 @@ export default class HexFrame {
     let out = _(NEIGHBOR_LIST)
       .map((point) => {
         let index = this._pointIndex(point.x + x, point.y + y);
-        let n = this.hexesIndex[index];
-        return n;
+        return this.hexesIndex[index];
       }).compact().value();
     return out;
   }

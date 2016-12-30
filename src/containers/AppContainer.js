@@ -17,7 +17,6 @@ class AppContainer extends Component {
   componentDidMount() {
     if (typeof window !== 'undefined') {
       this.ani = new Gears(this.props.store, 'ani');
-      this.ani.play();
     }
   }
 

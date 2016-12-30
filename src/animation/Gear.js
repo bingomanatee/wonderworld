@@ -11,7 +11,7 @@ import Point from 'point-geometry';
 
 let TRANSPORT_RATE = 25; // the circular distance every gear should go.
 // the larger the radius, the slower the rotation rate needed to achieve this rate.
-const GEAR_COLOR = 'hsl(200, 50%, 25%)';
+const GEAR_COLOR = 'black'; // 'hsl(200, 50%, 25%)';
 const LETTER_COLOR = 'hsl(200, 62%, 80%)';
 function _randScale(center, scale, min, max) {
   let rand = (center || 0) + (scale || 1) * (_.random(-100, 100) + _.random(-100, 100)) / 400;

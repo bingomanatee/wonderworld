@@ -27,16 +27,19 @@ body {
 canvas.background {
   left: 0;
   top: 0;
+  position: absolute;
+}
+
+#background_canvases {
+  z-index: -11000;
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  position: absolute;
-  overflow: hidden;
+  canvas {
+    z-index: -1000;
+  }
 }
 #ani {
-  z-index: 11000;
-}
-#ani_back {
-  z-index: -1000;
 }
 
 #ani-letters {
