@@ -1,9 +1,6 @@
 import Point from 'point-geometry';
 import Gear from './Gear';
-import {HEIGHT_OF_SPOKE} from './GearShape';
 import PageBackground from './PageBackground';
-
-import {Swatch} from './Swatch';
 
 export default class Gears {
   constructor(store, id) {
@@ -54,10 +51,10 @@ export default class Gears {
 
     this.background.addChild(s);
 
-     const last = 40;
-     for (let i in _.range(0, last)){
-     this._swatches.push(new Swatch(this, i, last));
-     }
+    const last = 40;
+    for (let i in _.range(0, last)) {
+      this._swatches.push(new Swatch(this, i, last));
+    }
 
     this.background.update();
 
@@ -74,13 +71,32 @@ export default class Gears {
   }
 
   play() {
-    let letters = 'Wonderland'.split('');
-    let targetWidth = this.width / (letters.length + 4);
+    let letters = 'Wonderland Labs'.split('');
+    let targetWidth = this.width / ((letters.length + 4));
 
     let gear = Gear.makeSentence(this, letters, targetWidth);
 
     gear.x = targetWidth;
-    gear.y = this.height / 2;
+    gear.y = targetWidth * 1.5;
+
+    let gears = gear.getAllGears();
+    console.log('gears:', gears);
+
+    let minY = _(gears)
+      .map((gear) =>  gear.parentJoint ? gear.parentJoint.localToGlobal(0,0).y: 1000)
+      .compact()
+      .min();
+    console.log('min y:', minY);
+
+    let maxX = _(gears)
+      .map((gear) =>  gear.parentJoint ? gear.parentJoint.localToGlobal(0,0).x: 1000)
+      .compact()
+      .max();
+
+    if(minY < targetWidth/2) {
+      let gap = targetWidth - minY;
+      gear.y = gap;
+    }
 
     this.gearz.push(gear);
     let count = 0;
@@ -114,4 +130,11 @@ export default class Gears {
     return new Point(this.width, this.height).div(2);
   }
 
+  get spokeScale() {
+    if (this.width < 1200) {
+      return 0.5;
+    } else {
+      return 1;
+    }
+  }
 }

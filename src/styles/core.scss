@@ -37,16 +37,15 @@ canvas.background {
 }
 #ani_back {
   z-index: -1000;
-  border: 2px solid red;
 }
 
 #ani-letters {
   position: absolute;
-  height: 0;
-  width: 0;
+  height: 100%;
+  width: 100%;
   left: 0;
   top: 0;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .wll-letter {
@@ -61,6 +60,7 @@ canvas.background {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-shadow: 4px 2px 3px rgba(0,0,0,0.75);
 }
 
 .wll-letter__character {

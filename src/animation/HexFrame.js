@@ -1,4 +1,14 @@
 import Point from 'point-geometry';
+import _ from 'lodash';
+
+const NEIGHBOR_LIST = [
+  new Point(-1, 0),
+  new Point(0, -1),
+  new Point(1, -1),
+  new Point(1, 0),
+  new Point(0, 1),
+  new Point(-1, 1)
+];
 
 export function hexRoundCube(x, y, z) {
   let rx = Math.round(x)
@@ -34,7 +44,6 @@ export function hexToPixelFlat(q, r, size) {
   return [x, y]
 }
 
-import _ from 'lodash';
 /**
  *
  * This is a flat topped coordinate system
@@ -46,7 +55,9 @@ import _ from 'lodash';
 const COS_30 = Math.cos(Math.PI / 6);
 
 export default class HexFrame {
-  constructor(radius) {
+
+  constructor(ani, radius) {
+    this.ani = ani;
     this.radius = radius;
   }
 
@@ -55,23 +66,104 @@ export default class HexFrame {
     return new Point(data[0], data[1]);
   }
 
-  hexPoints(hX, hY, hZ) {
+  pointToHex(x, y) {
+    let data = pixelToHexFlat(x, y, this.radius);
+    return new Point(data[0], data[1]);
+  }
+
+  hexPoints(hX, hY) {
     let center = this.hexToPoint(hX, hY);
 
-    return this._hexTemplate.map((p) => p.add(center));
+    return {
+      hX,
+      hY,
+      center,
+      points: this._hexTemplate.map((p) => p.add(center))
+    };
+  }
+
+  hexes() {
+    let points = _.map(this._boundsRect, (pt) => this.pointToHex(pt.x, pt.y));
+    let xs = _.map(points, 'x');
+    let ys = _.map(points, 'y');
+
+    let out = [];
+
+    // eval('debugger');
+
+    let count = 0;
+    let skipped = 0;
+
+    for (let x of _.range(_.min(xs), _.max(xs) + 1))
+      for (let y of _.range(_.min(ys), _.max(ys) + 1)) {
+        let center = this.hexToPoint(x, y);
+        if (this.inBounds(center.x, center.y)) {
+          out.push(this.hexPoints(x, y));
+          ++count;
+        } else {
+          ++skipped;
+        }
+      }
+    this.hexesIndex = _.keyBy(out, (item) => this._pointIndex(item.hX, item.hY));
+    return out;
+  }
+
+  _pointIndex(x, y) {
+    return `${x},${y}`;
+  }
+
+  neighbors(x, y) {
+    let out = _(NEIGHBOR_LIST)
+      .map((point) => {
+        let index = this._pointIndex(point.x + x, point.y + y);
+        let n = this.hexesIndex[index];
+        return n;
+      }).compact().value();
+    return out;
+  }
+
+  inBounds(x, y) {
+    if (x < this._minBound.x) {
+      return false;
+    }
+    if (y < this._minBound.y) {
+      return false;
+    }
+    if (x > this._maxBound.x) {
+      return false;
+    }
+    if (y > this._maxBound.y) {
+      return false;
+    }
+    return true;
   }
 
   /* --------------- dimension properties ------------ */
+
+  _ani
+  get ani() {
+    return this._ani;
+  }
+
+  set ani(value) {
+    this._ani = value;
+  }
 
   get radius() {
     return this._radius;
   }
 
-  set radius(value) {
-    this._radius = value;
-    this.diameter = 2 * value;
-    this.height = COS_30 * value;
+  set radius(rad) {
+    this._radius = rad;
+    this.diameter = 2 * rad;
+    this.height = COS_30 * rad;
 
+    this._setHexTemplate();
+
+    this._setBounds();
+  }
+
+  _setHexTemplate() {
     let top = -this.height;
     let bottom = this.height;
     let right = this.radius;
@@ -87,6 +179,36 @@ export default class HexFrame {
       new Point(left, 0),
       new Point(lMid, top)
     ];
+  }
+
+  _setBounds() {
+
+    /**
+     * because the coord system of the hex system is different than
+     * the cartesian rectangle, we define the bounds rect as four points
+     * and get the range of hex coordinates from them that contain all those points.
+     *
+     * @type {[Point]}
+     * @private
+     */
+    this._boundsRect = [
+      new Point(this.radius * -3, this.radius * -3),
+      new Point(this.radius * -3, this.ani.height + (this.radius * 3)),
+      new Point(this.ani.width + (this.radius * 3), this.radius * -3),
+      new Point(this.ani.width + (this.radius * 3), this.ani.height + (this.radius * 3))
+    ];
+
+    this._minBound = new Point(0, 0);
+    this._maxBound = new Point(0, 0);
+    _.each(this._boundsRect, (boundPoint) => {
+      _.each(['x', 'y'], (c) => {
+        if (boundPoint[c] < this._minBound[c]) {
+          this._minBound[c] = boundPoint[c];
+        } else if (boundPoint[c] > this._maxBound[c]) {
+          this._maxBound[c] = boundPoint[c];
+        }
+      });
+    });
   }
 
   _diameter

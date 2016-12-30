@@ -4,10 +4,10 @@
  export const HEIGHT_OF_SPOKE = 8; // radial distance of spoke from edge of gear;
  const RING_HEIGHT = 3;
  */
-export const DIST_BETWEEN_SPOKES = 30;
-const SPOKE_ANGLE_DEG = 40;
-export const HEIGHT_OF_SPOKE = 15; // radial distance of spoke from edge of gear;
-const RING_HEIGHT = 8;
+export const DIST_BETWEEN_SPOKES = 15;
+const SPOKE_ANGLE_DEG = 20;
+export const HEIGHT_OF_SPOKE = 8; // radial distance of spoke from edge of gear;
+const RING_HEIGHT = 4;
 
 const SPOKE_WIDTH = DIST_BETWEEN_SPOKES / 2; // size of spoke tangent to gear
 const SPOKE_Y = -SPOKE_WIDTH / 2;
@@ -48,15 +48,17 @@ export default class GearShape {
      * a spokes
      */
 
+    const HEIGHT = HEIGHT_OF_SPOKE * this.gear.ani.spokeScale;
+
     for (let s = 0; s < this.spokeCount; ++s) {
       let angle = s * 360 / this.spokeCount;
       let spokeShape = new createjs.Shape();
       spokeShape.x = spokeShape.y = OFFSET;
       spokeShape.graphics.f(this.rgb)
-        .mt(this.gear.radius - RING_HEIGHT /2, SPOKE_Y)
-        .lt(this.gear.radius + HEIGHT_OF_SPOKE, SPOKE_Y_TOP)
-        .lt(this.gear.radius + HEIGHT_OF_SPOKE, -SPOKE_Y_TOP)
-        .lt(this.gear.radius - RING_HEIGHT /2, -SPOKE_Y)
+        .mt(this.gear.radius - RING_HEIGHT /2, SPOKE_Y * this.gear.ani.spokeScale)
+        .lt(this.gear.radius + HEIGHT, SPOKE_Y_TOP * this.gear.ani.spokeScale)
+        .lt(this.gear.radius + HEIGHT, -SPOKE_Y_TOP * this.gear.ani.spokeScale)
+        .lt(this.gear.radius - RING_HEIGHT /2, -SPOKE_Y * this.gear.ani.spokeScale)
         .ef();
       spokeShape.rotation = angle;
       this.stage.addChild(spokeShape);
