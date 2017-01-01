@@ -5,6 +5,9 @@
 // Just remove them if they're not what you want
 html {
   box-sizing: border-box;
+  background-color: $pageBackground;
+}
+canvas {
 }
 
 html,
@@ -12,6 +15,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
 }
 
 body {
@@ -31,15 +35,16 @@ canvas.background {
 }
 
 #background_canvases {
-  z-index: -11000;
+  z-index: 100;
   overflow: hidden;
   width: 100%;
   height: 100%;
   canvas {
-    z-index: -1000;
+    z-index: 200;
   }
 }
 #ani {
+  z-index: 1;
 }
 
 #ani-letters {
@@ -49,16 +54,16 @@ canvas.background {
   left: 0;
   top: 0;
   overflow: hidden;
-  z-index: -500;
+  z-index: 400;
 }
 
 .wll-letter {
-  font-family: AnyMale, Helvetica;
+  font-family: Arvo, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-weight: 400;
   position: absolute;
   white-space: nowrap;
   width: 200px;
   height: 200px;
-  background-color: 'red';
   color: white;
   text-align: center;
   display: flex;
@@ -74,4 +79,16 @@ canvas.background {
 
 #root {
   height: 100%;
+  z-index: 10000;
+}
+
+.content-frame {
+  height: 100%;
+  padding-top: 100px;
+  @media screen and (max-width: 800px) {
+    padding-top: 70px;
+  }
+}
+
+.content-frame__scrolling {
 }

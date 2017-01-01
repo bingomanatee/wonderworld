@@ -1,3 +1,12 @@
+.core-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .core-layout__viewport {
-  padding-top: 4rem;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  min-height: 0px;
+  z-index: 2000;
 }

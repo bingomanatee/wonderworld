@@ -10,3 +10,9 @@ For example:
 @import './variables/components';
 @import './themes/default';
 */
+
+$textColor: hsl(200, 62%, 80%);
+$textEmphasis:  hsl(200, 100%, 80%);
+$secondaryText: hsl(200, 25%, 85%);
+$secondaryText2: hsl(200, 25%, 66%);
+$pageBackground: hsl(200, 50%, 10%);
