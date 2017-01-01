@@ -41,7 +41,7 @@ export default class GearShape {
     gearShape.x = gearShape.y = OFFSET;
     gearShape.graphics.beginFill(this.rgb);
     circle(gearShape, this.gear.radius)
-    circle(gearShape, this.gear.radius - RING_HEIGHT, 0, 0, true);
+    // circle(gearShape, this.gear.radius - RING_HEIGHT, 0, 0, true);
     this.stage.addChild(gearShape);
 
     /**

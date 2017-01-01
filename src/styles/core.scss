@@ -49,6 +49,7 @@ canvas.background {
   left: 0;
   top: 0;
   overflow: hidden;
+  z-index: -500;
 }
 
 .wll-letter {
@@ -69,4 +70,8 @@ canvas.background {
 .wll-letter__character {
   flex-basis: auto;
   font-size: 20rem;
+}
+
+#root {
+  height: 100%;
 }

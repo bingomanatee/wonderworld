@@ -1,6 +1,6 @@
-import CounterRoute from 'routes/Counter';
+import CounterRoute from 'routes/HomeView';
 
-describe('(Route) Counter', () => {
+describe('(Route) HomeView', () => {
   let _route;
 
   beforeEach(() => {

@@ -11,7 +11,7 @@ export default class LetterDiv {
      this.ani.canvasElement
        .find('#ani-letters')
        .append(`<div class="wll-letter" id="${divId}" >
-<div class="wll-letter__character" style="color: ${color}; font-size: ${1.5* size}px; line-height: ${2 * size}px">${letter.toUpperCase()}</div>
+<div class="wll-letter__character" style="color: ${color}; font-size: ${2* size}px; line-height: ${2 * size}px">${letter.toUpperCase()}</div>
 </div>`);
     this._element = this.ani.canvasElement.find(`#${divId}`);
     this.size = size;

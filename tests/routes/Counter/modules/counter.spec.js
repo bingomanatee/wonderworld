@@ -3,9 +3,9 @@ import {
   increment,
   doubleAsync,
   default as counterReducer
-} from 'routes/Counter/modules/counter';
+} from 'routes/HomeView/modules/counter';
 
-describe('(Redux Module) Counter', () => {
+describe('(Redux Module) HomeView', () => {
   it('Should export a constant COUNTER_INCREMENT.', () => {
     expect(COUNTER_INCREMENT).to.equal('COUNTER_INCREMENT');
   });

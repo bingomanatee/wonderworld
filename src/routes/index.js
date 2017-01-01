@@ -2,16 +2,17 @@
 import CoreLayout from '../layouts/CoreLayout/CoreLayout';
 import Home from './Home';
 import CounterRoute from './Counter';
-
+import HomepageRoute from './Homepage/index';
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
 
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  indexRoute  : Home,
+  indexRoute: { onEnter: (nextState, replace) => replace('/homepage') },
   childRoutes : [
-    CounterRoute(store)
+    CounterRoute(store),
+    HomepageRoute(store)
   ]
 });
 
@@ -22,7 +23,7 @@ export const createRoutes = (store) => ({
       require.ensure([], (require) => {
         cb(null, [
           // Remove imports!
-          require('./Counter').default(store)
+          require('./HomeView').default(store)
         ])
       })
     }

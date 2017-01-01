@@ -32,23 +32,11 @@ export default class Gears {
     this.background = new PageBackground(this, this.bgCanvasId, this.bgCanvasIdCrawl, this.bgCanvasId2);
 
     let letters = 'Wonderland Labs'.split('');
-    let targetWidth = this.width / ((letters.length + 4));
+    let targetWidth = Math.min(180, this.width / ((letters.length + 4)));
 
     let gear = Gear.makeSentence(this, letters, targetWidth);
     gear.x = targetWidth;
-    gear.y = targetWidth * 1.5;
-
-    let gears = gear.getAllGears();
-
-    let minY = _(gears)
-      .map((gear) => gear.parentJoint ? gear.parentJoint.localToGlobal(0, 0).y : 1000)
-      .compact()
-      .min();
-
-    if (minY < targetWidth / 2) {
-      let gap = targetWidth - minY;
-      gear.y = gap;
-    }
+    gear.y = 50;
 
     this.gearz.push(gear);
   }
@@ -67,7 +55,7 @@ export default class Gears {
     this.gearz = [];
     this.id = id;
     store.subscribe(() => {
-      console.log('container data = ', props.store.getState());
+      console.log('container data = ', store.getState());
     });
 
     let handleTick = (event) => {
