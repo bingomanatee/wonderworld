@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 import locationReducer from './location';
+import breadcrumbReducer from './breadcrumb';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
+    breadcrumb: breadcrumbReducer,
     ...asyncReducers
   });
 };

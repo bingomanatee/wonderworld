@@ -1,9 +1,45 @@
+@import '../../styles/base';
+
 .route--active {
   font-weight: bold;
   text-decoration: underline;
 }
 
 .header {
+  z-index: 1000;
+  display: block;
+  width: 100%;
+  display: flex;
+flex-direction: row;
+  justify-content: flex-start;
   flex-grow: 0;
   flex-shrink: 0;
+  border-top: 1px solid rgba(255,51,255, 0.5);
+  border-bottom: 1px solid rgba(255,51,255, 0.5);
+  margin-top: 0.5rem;
+  padding: 0.5rem 3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  a {
+    font-family: Arvo, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+  .header__link {
+    display: flex;
+    flex-direction: row;
+    .header__bullet {
+      color: magenta;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+    &:last-child {
+      .header__bullet {
+        display: none;
+      }
+    }
+  }
 }

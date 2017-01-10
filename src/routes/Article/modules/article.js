@@ -1,16 +1,17 @@
 import articleModel from '../../../models/Articles';
+import {setBreadcrumb} from '../../../store/breadcrumb'
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const GET_ARTICLES = 'GET_ARTICLES';
+export const GET_ARTICLE = 'GET_ARTICLE';
 
 // ------------------------------------
 // Actions
 // ------------------------------------
 
-export function getArticles(value = []) {
+export function getArticle(value = {}) {
   return {
-    type: GET_ARTICLES,
+    type: GET_ARTICLE,
     payload: value
   };
 }
@@ -23,12 +24,15 @@ export function getArticles(value = []) {
  you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
  reducer take care of this logic.  */
 
-export const loadArticles = () => {
+export const loadArticle = (articlepath) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      articleModel.getHomepage()
-        .then((articles) => {
-          dispatch(getArticles(articles));
+      articleModel.getArticle(articlepath)
+        .then((article) => {
+        console.log('retrieved article: ', article);
+          dispatch(getArticle(article));
+          console.log('resolving with breadcrumb: ', article.breadcrumb);
+          dispatch(setBreadcrumb(article.breadcrumb));
           resolve();
         });
     });
@@ -36,24 +40,24 @@ export const loadArticles = () => {
 };
 
 export const actions = {
-  getArticles,
-  loadArticles
+  getArticle,
+  loadArticle
 };
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [GET_ARTICLES]: (state, action) => Object.assign({}, state, {articles: action.payload})
+  [GET_ARTICLE]: (state, action) => Object.assign({}, state, {article: action.payload})
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  articles: []
+  article: {}
 };
-export default function homepageReducer(state = initialState, action) {
+export default function articleReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
 
   return handler ? handler(state, action) : state;

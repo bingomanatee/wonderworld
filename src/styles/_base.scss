@@ -11,8 +11,42 @@ For example:
 @import './themes/default';
 */
 
+$homepageMaxWidth: 1400px;
+$chapterMaxWidth: $homepageMaxWidth;
+
+$contentMaxWidth: 1600px;
+
 $textColor: hsl(200, 62%, 80%);
 $textEmphasis:  hsl(200, 100%, 80%);
 $secondaryText: hsl(200, 25%, 85%);
 $secondaryText2: hsl(200, 25%, 66%);
 $pageBackground: hsl(200, 50%, 10%);
+$textFont: Heebo, Helvetica Neue, Helvetica, Arial, sans-serif;
+
+$titleFont: $textFont; /* Arvo, Helvetica Neue, Helvetica, Arial, sans-serif; */
+$textSize: 1.125rem;
+$headlineScale: 1.2;
+$leadingScale: 1.333;
+$headlineMargin: $textSize * $headlineScale * 0.25;
+$bulletScale: 0.9;
+$smallDeviceTextSize: 1rem;
+$textCode:  'Anonymous Pro', 'Courier New', Courier, monospace;
+$articleBorderColor : hsl(296, 35%, 68%);
+$codeBorderColor: $articleBorderColor;
+$articleHeadlineBorderColor: saturate($articleBorderColor, 0.2);
+$introColor: hsl(0, 0%, 100%);
+$codeBackgroundColor: hsl(200, 100%, 98%);
+$codeBackgroundBorderColor: hsl(200, 80%, 60%);
+$headlineMargin: 0.75rem;
+$majorArticleHeadline: hsl(280, 20%, 25%);
+$minorArticleHeadline: hsl(280, 80%, 40%);
+$smallSize: 800px;
+$largeSize: 1200px;
+
+$homepageTextTiny: 0.5rem;
+$homepageTextSmall: 0.85rem;
+$headlineTextLargeScale : 1.2;
+$allCapsScale : 0.66;
+
+$chapterTextTiny: $homepageTextTiny;
+$chapterTextSmall: $homepageTextSmall;

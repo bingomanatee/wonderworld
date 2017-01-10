@@ -34,13 +34,14 @@ export default class Gear extends Point {
    * @param letter {String}
    *
    */
-  constructor(ani, x, y, rad, letter) {
+  constructor(ani, x, y, rad, letter, letterSize) {
     super(x, y);
     this._rad = rad;
     this._ani = ani;
     this.radius = rad;
     this.letter = letter || '';
-    this._rotation = 0;
+    this._rotation = 0; // do NOT use the property! will start things churning
+    this.letterSize = letterSize;
 
     this.anglesPerSecond = 360 * TRANSPORT_RATE / this.circumference;
     this.color = LETTER_COLOR;
@@ -60,7 +61,7 @@ export default class Gear extends Point {
     this.element.y = this.y;
     this.ani.canvas.addChild(this.element);
 
-    this.letterDiv = new LetterDiv(this.ani, this.letter, this.radius, this.color);
+    this.letterDiv = new LetterDiv(this.ani, this.letter, this.radius, this.color, this.letterSize);
 
     this.syncGear();
   }
@@ -69,7 +70,7 @@ export default class Gear extends Point {
     createjs.Ticker.addEventListener('tick', (event) => {
       let seconds = event.time / 1000;
       if (seconds > SLOW_AT) {
-        seconds = Math.min(STOP_AT, SLOW_AT + (seconds - SLOW_AT)/SLOW_RATE);
+        seconds = Math.min(STOP_AT, SLOW_AT + (seconds - SLOW_AT) / SLOW_RATE);
       }
       this.element.x = this.x;
       this.element.y = this.y;
@@ -88,9 +89,9 @@ export default class Gear extends Point {
     this.letterDiv.y = p.y;
   }
 
-  addGear(radius, letter, targetAngle) {
+  addGear(radius, letter, targetAngle, letterWidth) {
     let initialAngle = targetAngle + 30 * _randScale();
-    let other = new Gear(this.ani, 0, 0, radius, letter);
+    let other = new Gear(this.ani, 0, 0, radius, letter, letterWidth);
     other.parentGear = this;
     this.childGears.push(other);
 
@@ -259,6 +260,7 @@ export default class Gear extends Point {
    * @param value {float}
    */
 
+  /** deprecated -- using letter div now */
   get letterShape() {
     return this._letter || '';
   }
@@ -317,11 +319,12 @@ export default class Gear extends Point {
   static makeSentence(ani, letters, targetWidth) {
     const _getRadius = () => Math.round(_randScale(targetWidth / 2, targetWidth / 4, targetWidth / 4, targetWidth));
     let radius = _getRadius();
-    let firstGear = new Gear(ani, 0, 0, radius, letters.shift());
+    let letterSize = Math.max(36, targetWidth * 0.8);
+    let firstGear = new Gear(ani, 0, 0, radius, letters.shift(), letterSize);
     let lastGear = firstGear;
     while (letters.length) {
       radius = _getRadius();
-      lastGear = lastGear.addGear(radius, letters.shift(), 0);
+      lastGear = lastGear.addGear(radius, letters.shift(), 0, letterSize);
       ani.gearz.push(lastGear);
     }
 

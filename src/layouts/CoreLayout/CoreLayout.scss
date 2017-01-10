@@ -2,6 +2,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  z-index: 2000;
+  position: relative;
 }
 
 .core-layout__viewport {
@@ -9,4 +11,5 @@
   overflow-y: auto;
   min-height: 0px;
   z-index: 2000;
+  position: relative;
 }

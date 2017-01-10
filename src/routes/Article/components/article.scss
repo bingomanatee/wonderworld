@@ -1,0 +1,110 @@
+@import '../../../styles/base';
+
+.article {
+  max-width: $contentMaxWidth;
+  * {
+    font-family: $textFont;
+  }
+  h1 {
+    font-family: $titleFont;
+    text-align: center;
+    margin: 1rem;
+    font-size: 2rem;
+    color: $textEmphasis;
+  }
+  .article__intro {
+    font-size: 1.5rem;
+    font-weight: 200;
+    text-align: center;
+    color: $introColor;
+    font-size: $textSize;
+  }
+  .article__content {
+    background: white;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-top: 1.5rem;
+    border-radius: 3rem;
+    padding: 3rem;
+    @media screen and (max-width: $smallSize) {
+      margin: 0;
+      border-radius: 0;
+      padding: 2rem;
+      p, div {
+        font-size: $smallDeviceTextSize;
+        line-height: $smallDeviceTextSize * $leadingScale;
+      }
+      p {
+        margin: 0;
+        margin-bottom: 0.25rem;
+      }
+      li {
+        font-size: $smallDeviceTextSize * $bulletScale;
+        line-height: $smallDeviceTextSize * $leadingScale * $bulletScale;
+      }
+      code {
+        font-size: 1em;
+      }
+    }
+    h1, h2, h3, h4 {
+      font-family: $titleFont;
+      font-size: $textSize * $headlineScale;
+      font-weight: 800;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      padding-top: $headlineMargin;
+      padding-bottom: $headlineMargin;
+    }
+
+    h1, h2 {
+      color: $majorArticleHeadline;
+    }
+
+    h2 {
+      border-bottom: 1px solid $articleHeadlineBorderColor;
+      margin-bottom: $headlineMargin;
+      text-align: left;
+    }
+
+    h3, h4, h5 {
+      text-align: left;
+      font-weight: 200;
+      font-size: $textSize * 1.25;
+      color: $minorArticleHeadline;
+    }
+
+    h4, h5 {
+      font-style: italic;
+    }
+
+    p, div {
+      font-size: $textSize;
+      line-height: $textSize * $leadingScale;
+    }
+    p {
+      margin: 0;
+      margin-bottom: 0.5rem;
+    }
+   li {
+      font-size: $textSize * $bulletScale;
+      line-height: $textSize * $leadingScale * $bulletScale;
+    }
+    pre {
+      -webkit-box-shadow: inset 5px -2px 36px -7px $codeBackgroundColor;
+      -moz-box-shadow: inset 5px -2px 36px -7px $codeBackgroundBorderColor;
+      box-shadow: inset 5px -2px 36px -7px $codeBackgroundBorderColor;
+      padding-left: 2rem;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
+      background-color: $codeBackgroundColor;
+      display: block;
+      overflow-x: auto;
+    }
+    code {
+      font-family: $textCode;
+      text-size: $textSize;
+      white-space: pre;
+    }
+  }
+}

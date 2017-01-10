@@ -1,6 +1,6 @@
 @import '../../../styles/base';
 
-.homepage-container {
+.chapter-container {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.5+8,0.25+45,0+100 */
   background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 8%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.5) 8%,rgba(0,0,0,0.25) 45%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
@@ -14,7 +14,7 @@
     background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,1) 8%,rgba(0,0,0,0.5) 45%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#00000000',GradientType=0 ); /* IE6-9 */
 
-    .homepage-container__inner{
+    .chapter-container__inner{
       h2 {
         color: $textEmphasis;
       }
@@ -22,7 +22,7 @@
   }
   padding: 0.5rem 3rem;
   margin-bottom: 0.25rem;
-  .homepage-container__inner {
+  .chapter-container__inner {
     max-width: $homepageMaxWidth;
     h2 {
       font-family: Heebo, Helvetica Neue, Helvetica, Arial, sans-serif;
@@ -45,7 +45,7 @@
     p {
       font-family: $textFont;
       color: $secondaryText2;
-      font-size: $homepageTextSmall;
+      font-size: $chapterTextSmall;
       font-weight: 400;
       margin: 0;
       padding: 0;
@@ -55,7 +55,7 @@
         font-weight: 200;
         display: inline-block;
         white-space: nowrap;
-        font-size: $homepageTextTiny;
+        font-size: $chapterTextTiny;
       }
     }
     @media screen and (min-width: $smallSize) {
@@ -70,7 +70,7 @@
         flex-direction: column;
         justify-content: flex-start;
         b {
-        font-size: $homepageTextTiny * $headlineTextLargeScale;
+        font-size: $chapterTextTiny * $headlineTextLargeScale;
         }
       }
       p {
@@ -78,14 +78,14 @@
         flex-grow: 1;
         flex-shrink: 1;
         display: flex;
-        font-size: $homepageTextSmall * $headlineTextLargeScale;
+        font-size: $chapterTextSmall * $headlineTextLargeScale;
         flex-direction: column;
         line-height: 1.4rem;
         justify-content: center;
         height: 100%;
         &.time {
           flex-grow: 0;
-          font-size: $homepageTextTiny * $headlineTextLargeScale;
+          font-size: $chapterTextTiny * $headlineTextLargeScale;
         }
         span {
           display: block;
@@ -99,7 +99,7 @@
       overflow: hidden;
       b {
 
-        font-size: $homepageTextTiny * $headlineTextLargeScale;
+        font-size: $chapterTextTiny * $headlineTextLargeScale;
       }
       }
       p {

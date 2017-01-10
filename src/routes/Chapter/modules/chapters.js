@@ -23,10 +23,10 @@ export function getArticles(value = []) {
  you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
  reducer take care of this logic.  */
 
-export const loadArticles = () => {
+export const loadArticles = (chapterPath) => {
   return (dispatch, getState) => {
     return new Promise((resolve) => {
-      articleModel.getHomepage()
+      articleModel.getChapter(chapterPath)
         .then((articles) => {
           dispatch(getArticles(articles));
           resolve();

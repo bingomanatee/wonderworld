@@ -91,4 +91,11 @@ canvas.background {
 }
 
 .content-frame__scrolling {
+  position: relative;
+  z-index: 3000;
+
+  .content-frame__title {
+    text-align: center;
+    color: $textEmphasis;
+  }
 }

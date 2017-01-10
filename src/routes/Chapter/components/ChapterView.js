@@ -1,15 +1,15 @@
 import React from 'react';
-import './homepage.scss';
+import './chapter.scss';
 const moment = require('moment');
 import _ from 'lodash';
 import {browserHistory} from 'react-router';
 
-export class Homepage extends React.Component {
+export class chapter extends React.Component {
 
   constructor(props) {
     super(props);
     console.log('loading articles');
-    props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
+    props.setBreadcrumb([{label: 'Home', path: '/chapter'}]);
   }
 
   static contextTypes = {
@@ -17,7 +17,7 @@ export class Homepage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.loadArticles();
+    this.props.loadArticles(this.props.params.chapterPath);
   }
 
   folderLabel(article) {
@@ -33,8 +33,8 @@ export class Homepage extends React.Component {
 
   articlesList() {
     if (!this.props.articles.length) {
-      return (<div className="homepage-container">
-        <div className="homepage-container__inner">
+      return (<div className="chapter-container">
+        <div className="chapter-container__inner">
           <p>Loading...</p>
         </div>
       </div>);
@@ -42,11 +42,11 @@ export class Homepage extends React.Component {
     return _(this.props.articles)
       .sortBy((article) => article.revisedMoment ? -article.revisedMoment.unix() : -100000)
       .map((article) => (
-        <div className="homepage-container"
+        <div className="chapter-container"
              onClick={() =>  this.visitArticle(article.path)}
-             key={'homepage-article-' + article.path}>
-          <div className="homepage-container__inner">
-            <h2>{this.folderLabel(article)}{article.title}</h2>
+             key={'chapter-article-' + article.path}>
+          <div className="chapter-container__inner">
+            <h2>{article.title}</h2>
             <p><span>{article.intro || ' '} </span></p>
             <p className="time"><span>{article.revisedMoment.fromNow() }</span></p>
           </div>
@@ -57,17 +57,18 @@ export class Homepage extends React.Component {
     const list = this.articlesList();
     return (
       <div className="content-frame__scrolling">
+        <h1 className="content-frame__title">{this.props.params.chapterPath}</h1>
         { list }
       </div>
     )
   }
 }
 
-Homepage.propTypes = {
+chapter.propTypes = {
   articles: React.PropTypes.array,
   loadArticles: React.PropTypes.func.isRequired,
   getArticles: React.PropTypes.func.isRequired,
   setBreadcrumb: React.PropTypes.func
 };
 
-export default Homepage;
+export default chapter;

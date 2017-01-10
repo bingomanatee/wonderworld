@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { loadArticles, getArticles } from '../modules/articles';
+import { loadArticle, getArticle } from '../modules/article';
 import {setBreadcrumb } from '../../../store/breadcrumb';
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -7,21 +7,24 @@ import {setBreadcrumb } from '../../../store/breadcrumb';
     wiring in the actions and state necessary to render a presentational
     component - in this case, the counter:   */
 
-import HomepageView from '../components/HomepageView';
+import ArticleView from '../components/ArticleView';
 
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  loadArticles,
-  getArticles,
+  loadArticle,
+  getArticle,
   setBreadcrumb
 };
 
-const mapStateToProps = (state) => ({
-  articles: state.homepage.articles,
-});
+const mapStateToProps = (state) =>{
+  console.log('mapping state: ', state);
+return  ({
+    article: state.article.article
+  });
+}
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 
@@ -37,4 +40,4 @@ const mapStateToProps = (state) => ({
     Selectors are composable. They can be used as input to other selectors.
     https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomepageView);
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleView);

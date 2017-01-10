@@ -188,7 +188,6 @@ export default class Ani {
       // console.log('extremes', minExtreme, maxExtreme);
 
       setTimeout(() => {
-        console.log('animate')
         group.animate({transform: matrix}, _.random(250, 1000),
           window.mina.easeout,
           () => {

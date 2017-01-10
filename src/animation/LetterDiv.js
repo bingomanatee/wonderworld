@@ -1,9 +1,10 @@
 
 let _nextId = 0;
 export default class LetterDiv {
-  constructor(ani, letter, size, color){
+  constructor(ani, letter, size, color, letterSize){
     this.ani = ani;
     this.letter = letter;
+    this.letterSize = letterSize;
     this._x = 0;
     this._y = 0;
     this.id = ++_nextId;
@@ -11,7 +12,7 @@ export default class LetterDiv {
      this.ani.canvasElement
        .find('#ani-letters')
        .append(`<div class="wll-letter" id="${divId}" >
-<div class="wll-letter__character" style="color: ${color}; font-size: ${2* size}px; line-height: ${2 * size}px">${letter.toUpperCase()}</div>
+<div class="wll-letter__character" style="color: ${color}; font-size: ${letterSize}px; line-height: ${ letterSize}px">${letter.toUpperCase()}</div>
 </div>`);
     this._element = this.ani.canvasElement.find(`#${divId}`);
     this.size = size;
