@@ -9,7 +9,7 @@ export class chapter extends React.Component {
   constructor(props) {
     super(props);
     console.log('loading articles');
-    props.setBreadcrumb([{label: 'Home', path: '/chapter'}]);
+    props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
   }
 
   static contextTypes = {
