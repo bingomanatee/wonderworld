@@ -4,7 +4,7 @@ import './FolderLabel.scss';
 import '../FolderLabel/FolderLabel';
 
 export class FolderLabel extends React.Component {
-  render() {
+  render() {``
     if (!this.props.article.folder) {
       return null;
     }
