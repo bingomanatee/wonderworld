@@ -3,6 +3,7 @@ import './homepage.scss';
 const moment = require('moment');
 import _ from 'lodash';
 import {browserHistory} from 'react-router';
+import ArticleListItem from '../../../components/ArticleListItem/ArticleListItem'
 
 export class Homepage extends React.Component {
 
@@ -20,37 +21,27 @@ export class Homepage extends React.Component {
     this.props.loadArticles();
   }
 
-  folderLabel(article) {
-    if (!article.folder) {
-      return '';
-    }
-    return <b>{article.folder.replace('_', ' ')}:</b>;
-  }
-
   visitArticle(path) {
-    setTimeout(() => this.context.router.push(`article/${encodeURIComponent(path.replace(/\.md$/, ''))}`), 500);
+    this.context.router.push(`article/${encodeURIComponent(path.replace(/\.md$/, ''))}`);
   }
 
   articlesList() {
     if (!this.props.articles.length) {
-      return (<div className="homepage-container">
-        <div className="homepage-container__inner">
+      return (<div className="article-list-item">
+        <div className="article-list-item-inner">
           <p>Loading...</p>
         </div>
       </div>);
     }
+
+    const visitArticle = (article) => {
+      this.visitArticle(article.path);
+    };
+
     return _(this.props.articles)
       .sortBy((article) => article.revisedMoment ? -article.revisedMoment.unix() : -100000)
       .map((article) => (
-        <div className="homepage-container"
-             onClick={() =>  this.visitArticle(article.path)}
-             key={'homepage-article-' + article.path}>
-          <div className="homepage-container__inner">
-            <h2>{this.folderLabel(article)}{article.title}</h2>
-            <p><span>{article.intro || ' '} </span></p>
-            <p className="time"><span>{article.revisedMoment.fromNow() }</span></p>
-          </div>
-        </div>)).value();
+        <ArticleListItem article={article} visitArticle={visitArticle}></ArticleListItem>)).value();
   }
 
   render() {

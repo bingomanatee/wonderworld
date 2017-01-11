@@ -11,42 +11,43 @@ For example:
 @import './themes/default';
 */
 
-$homepageMaxWidth: 1400px;
-$chapterMaxWidth: $homepageMaxWidth;
+/* ----------- proportion/scaling ------------ */
 
-$contentMaxWidth: 1600px;
-
-$textColor: hsl(200, 62%, 80%);
-$textEmphasis:  hsl(200, 100%, 80%);
-$secondaryText: hsl(200, 25%, 85%);
-$secondaryText2: hsl(200, 25%, 66%);
-$pageBackground: hsl(200, 50%, 10%);
-$textFont: Heebo, Helvetica Neue, Helvetica, Arial, sans-serif;
-
-$titleFont: $textFont; /* Arvo, Helvetica Neue, Helvetica, Arial, sans-serif; */
-$textSize: 1.125rem;
-$headlineScale: 1.2;
-$leadingScale: 1.333;
-$headlineMargin: $textSize * $headlineScale * 0.25;
+$allCapsScale: 0.66;
 $bulletScale: 0.9;
-$smallDeviceTextSize: 1rem;
-$textCode:  'Anonymous Pro', 'Courier New', Courier, monospace;
-$articleBorderColor : hsl(296, 35%, 68%);
-$codeBorderColor: $articleBorderColor;
-$articleHeadlineBorderColor: saturate($articleBorderColor, 0.2);
-$introColor: hsl(0, 0%, 100%);
-$codeBackgroundColor: hsl(200, 100%, 98%);
-$codeBackgroundBorderColor: hsl(200, 80%, 60%);
+$leadingScale: 1.333;
+$headlineScale: 1.2;
 $headlineMargin: 0.75rem;
+
+/* ----------- responsive breakpoints --------------- */
+
+$largeSize: 1200px;
+$smallSize: 800px;
+$contentMaxWidth: 1400px;
+
+/* ------------ colors ------------------- */
+
 $majorArticleHeadline: hsl(280, 20%, 25%);
 $minorArticleHeadline: hsl(280, 80%, 40%);
-$smallSize: 800px;
-$largeSize: 1200px;
+$textColor: hsl(200, 62%, 80%);
+$textEmphasis: hsl(200, 100%, 80%);
+$introColor: hsl(0, 0%, 100%);
 
-$homepageTextTiny: 0.5rem;
-$homepageTextSmall: 0.85rem;
-$headlineTextLargeScale : 1.2;
-$allCapsScale : 0.66;
+$pageBackground: hsl(200, 50%, 10%);
+$secondaryText2: hsl(200, 15%, 66%);
+$secondaryText: hsl(200, 25%, 85%);
 
-$chapterTextTiny: $homepageTextTiny;
-$chapterTextSmall: $homepageTextSmall;
+$articleBorderColor: hsl(296, 35%, 68%);
+$articleHeadlineBorderColor: saturate($articleBorderColor, 0.2);
+
+$codeBackgroundBorderColor: hsl(200, 80%, 60%);
+$codeBackgroundColor: hsl(200, 100%, 98%);
+
+/* ---------------- text ------------------ */
+
+$smallDeviceTextSize: 1rem;
+
+$textCode: 'Anonymous Pro', 'Courier New', Courier, monospace;
+$textFont: Heebo, Helvetica Neue, Helvetica, Arial, sans-serif;
+$textSize: 1.125rem;
+$titleFont: $textFont; /* Arvo, Helvetica Neue, Helvetica, Arial, sans-serif; */

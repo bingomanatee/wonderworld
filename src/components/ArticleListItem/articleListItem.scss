@@ -1,0 +1,124 @@
+@import '../../styles/base';
+
+/* ------------ article list ---------------- */
+
+$articleListMaxWidth: 1400px;
+$articleListTextSmall: 0.75rem;
+$articleListTextTiny: 0.5rem;
+$headlineTextLargeScale: 1.2; /* enlarging text for responsive large size */
+$articleHeadlineFont: Heebo, Helvetica Neue, Helvetica, Arial, sans-serif;
+$articleListItemTitleHeight: 1.2rem;
+$articleSmallSizeScale: 0.85;
+
+@mixin flex-bottom() {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.article-list-item {
+  padding: 0.5rem 3rem;
+  margin-bottom: 0.25rem;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.5+8,0.25+45,0+100 */
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 8%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 8%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.5) 8%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#00000000', GradientType=0); /* IE6-9 */
+
+  &:hover {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,1+8,0.5+45,0+100 */
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 8%, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 8%, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 8%, rgba(0, 0, 0, 0.5) 45%, rgba(0, 0, 0, 0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#00000000', GradientType=0); /* IE6-9 */
+
+  }
+  .article-list-item-inner {
+    max-width: $articleListMaxWidth;
+  }
+}
+
+.article-list-item-title-group {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: $articleListItemTitleHeight/4;
+}
+
+.article-list-item-folder {
+  .article-list-item-folder__inner {
+    display: inline;
+    color: $secondaryText;
+    margin-right: 0.25rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: $textSize * $allCapsScale;
+    line-height: $articleListItemTitleHeight;
+  }
+}
+
+.article-list-item-title {
+  line-height: $articleListItemTitleHeight;
+  .article-list-item-title__inner {
+    font-family: $articleHeadlineFont;
+    color: white;
+    padding: 0;
+    margin: 0;
+    font-weight: 400;
+    font-size: $textSize;
+  }
+}
+
+.article-list-item-description-group {
+  display: flex;
+  flex-direction: row;
+  @media screen and (max-width: $smallSize) {
+    display: block;
+    * {
+      display: inline;
+    }
+  }
+}
+
+.article-list-item-intro {
+  flex-grow: 1;
+  @media screen and (max-width: $smallSize) {
+  display: inline;
+}
+  .article-list-item-intro__inner {
+    font-family: $textFont;
+    color: $secondaryText2;
+    font-size: $articleListTextSmall;
+    font-weight: 200;
+    margin: 0;
+    padding: 0;
+    line-height: $articleListTextSmall *  $leadingScale;
+    @media screen and (max-width: $smallSize) {
+      font-size: $articleListTextSmall * $articleSmallSizeScale;
+      line-height: $articleListTextSmall *  $leadingScale * $articleSmallSizeScale;
+      display: inline;
+    }
+  }
+}
+
+.article-list-item-time {
+  height: 100%;
+  margin-left: 2rem;
+  @media screen and (max-width: $smallSize) {
+    margin-left: 1rem;
+  display: inline;
+}
+  .article-list-item-time__inner {
+    color: $secondaryText2;
+    flex-grow: 0;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    font-weight: 200;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: $articleListTextTiny;
+    @media screen and (max-width: $smallSize) {
+      display: inline;
+    }
+  }
+}
