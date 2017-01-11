@@ -3,12 +3,15 @@
 /* ------------ article list ---------------- */
 
 $articleListMaxWidth: 1400px;
-$articleListTextSmall: 0.75rem;
+$articleListTextSmall: 0.8rem;
 $articleListTextTiny: 0.5rem;
 $headlineTextLargeScale: 1.2; /* enlarging text for responsive large size */
 $articleHeadlineFont: Heebo, Helvetica Neue, Helvetica, Arial, sans-serif;
 $articleListItemTitleHeight: 1.2rem;
 $articleSmallSizeScale: 0.85;
+$articleLargeSizeScale: 1.1;
+$articleListItemDescLineHeightScale: 1.33;
+$articleListItemTitleLineHeightScale: 1.4;
 
 @mixin flex-bottom() {
   display: flex;
@@ -36,6 +39,10 @@ $articleSmallSizeScale: 0.85;
   }
   .article-list-item-inner {
     max-width: $articleListMaxWidth;
+    @media screen and (min-width: $largeSize) {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
 
@@ -43,22 +50,42 @@ $articleSmallSizeScale: 0.85;
   display: flex;
   flex-direction: row;
   margin-bottom: $articleListItemTitleHeight/4;
+
+  @media screen and (max-width: $smallSize) {
+    margin-bottom: 3px;
+    display: block;
+  }
+  @media screen and (min-width: $largeSize) {
+    flex-basis: 500px;
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-right: 1.5rem;
+  }
 }
 
 .article-list-item-folder {
   .article-list-item-folder__inner {
-    display: inline;
+    display: inline-block;
     color: $secondaryText;
     margin-right: 0.25rem;
-    font-weight: 400;
+    font-weight: 200;
     text-transform: uppercase;
     font-size: $textSize * $allCapsScale;
-    line-height: $articleListItemTitleHeight;
+    line-height: $textSize * $allCapsScale * $articleListItemTitleLineHeightScale;
+    margin-right: 1rem;
+    @media screen and (max-width: $smallSize) {
+      font-size: $textSize * $allCapsScale * $articleSmallSizeScale;
+      line-height: $articleListItemTitleHeight * $articleSmallSizeScale;
+    }
+    @media screen and (min-width: $largeSize) {
+      font-size: $textSize * $allCapsScale *  $articleLargeSizeScale;
+      line-height: $textSize * $articleLargeSizeScale * $articleListItemTitleLineHeightScale;
+      margin-right: 1.5rem;
+    }
   }
 }
 
 .article-list-item-title {
-  line-height: $articleListItemTitleHeight;
   .article-list-item-title__inner {
     font-family: $articleHeadlineFont;
     color: white;
@@ -66,6 +93,17 @@ $articleSmallSizeScale: 0.85;
     margin: 0;
     font-weight: 400;
     font-size: $textSize;
+    display: inline-block;
+    line-height: $textSize * $articleListItemTitleLineHeightScale;
+    @media screen and (max-width: $smallSize) {
+      font-size: $textSize * $articleSmallSizeScale;
+      line-height: $textSize * $articleListItemTitleLineHeightScale * $articleSmallSizeScale;
+    }
+    @media screen and (min-width: $largeSize) {
+      font-weight: 200;
+      font-size: $textSize * $articleLargeSizeScale;
+      line-height: $textSize * $articleListItemTitleLineHeightScale * $articleLargeSizeScale;
+    }
   }
 }
 
@@ -74,17 +112,16 @@ $articleSmallSizeScale: 0.85;
   flex-direction: row;
   @media screen and (max-width: $smallSize) {
     display: block;
-    * {
-      display: inline;
-    }
+  }
+  @media screen and (min-width: $largeSize) {
+    flex-grow: 1;
   }
 }
 
 .article-list-item-intro {
   flex-grow: 1;
   @media screen and (max-width: $smallSize) {
-  display: inline;
-}
+  }
   .article-list-item-intro__inner {
     font-family: $textFont;
     color: $secondaryText2;
@@ -92,11 +129,11 @@ $articleSmallSizeScale: 0.85;
     font-weight: 200;
     margin: 0;
     padding: 0;
-    line-height: $articleListTextSmall *  $leadingScale;
+    line-height: $articleListTextSmall *  $articleListItemDescLineHeightScale;
+    display: inline-block;
     @media screen and (max-width: $smallSize) {
       font-size: $articleListTextSmall * $articleSmallSizeScale;
-      line-height: $articleListTextSmall *  $leadingScale * $articleSmallSizeScale;
-      display: inline;
+      line-height: $articleListTextSmall *  $articleListItemDescLineHeightScale * $articleSmallSizeScale;
     }
   }
 }
@@ -105,9 +142,9 @@ $articleSmallSizeScale: 0.85;
   height: 100%;
   margin-left: 2rem;
   @media screen and (max-width: $smallSize) {
-    margin-left: 1rem;
-  display: inline;
-}
+    margin-left: 0rem;
+    text-align: right;
+  }
   .article-list-item-time__inner {
     color: $secondaryText2;
     flex-grow: 0;
