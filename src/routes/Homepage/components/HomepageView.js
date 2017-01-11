@@ -21,8 +21,9 @@ export class Homepage extends React.Component {
     this.props.loadArticles();
   }
 
-  visitArticle(path) {
-    this.context.router.push(`article/${encodeURIComponent(path.replace(/\.md$/, ''))}`);
+  visitArticle(article) {
+    eval('debugger');
+    this.context.router.push(`article/${encodeURIComponent(article.path.replace(/\.md$/, ''))}`);
   }
 
   articlesList() {
@@ -35,13 +36,15 @@ export class Homepage extends React.Component {
     }
 
     const visitArticle = (article) => {
-      this.visitArticle(article.path);
+      this.visitArticle(article);
     };
+
+    const key = (article) => `article-key-${article.path}`;
 
     return _(this.props.articles)
       .sortBy((article) => article.revisedMoment ? -article.revisedMoment.unix() : -100000)
       .map((article) => (
-        <ArticleListItem article={article} visitArticle={visitArticle}></ArticleListItem>)).value();
+        <ArticleListItem key={key(article)} article={article} visitArticle={visitArticle}></ArticleListItem>)).value();
   }
 
   render() {

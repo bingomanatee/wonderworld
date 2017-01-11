@@ -142,8 +142,7 @@ $articleListItemTitleLineHeightScale: 1.4;
   height: 100%;
   margin-left: 2rem;
   @media screen and (max-width: $smallSize) {
-    margin-left: 0rem;
-    text-align: right;
+    display: none;
   }
   .article-list-item-time__inner {
     color: $secondaryText2;
