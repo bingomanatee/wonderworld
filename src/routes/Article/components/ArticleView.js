@@ -3,7 +3,7 @@ import './article.scss';
 const moment = require('moment');
 import _ from 'lodash';
 import marked from 'marked';
-
+import {SERVER_URL} from '../../../config';
 export class ArticleView extends React.Component {
 
   constructor(props) {
@@ -23,7 +23,7 @@ export class ArticleView extends React.Component {
   }
 
   content() {
-    if (!this.props.article.content) {
+    if (!(this.props.article && this.props.article.content)) {
       return {__html: '<p>loading...</p>'};
     } else {
       return {__html: marked(this.props.article.content)};

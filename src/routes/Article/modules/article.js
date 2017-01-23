@@ -1,5 +1,6 @@
 import articleModel from '../../../models/Articles';
-import {setBreadcrumb} from '../../../store/breadcrumb'
+import {setBreadcrumb} from '../../../store/breadcrumb';
+import {SERVER_URL} from '../../../config';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -30,6 +31,9 @@ export const loadArticle = (articlepath) => {
       articleModel.getArticle(articlepath)
         .then((article) => {
         console.log('retrieved article: ', article);
+          if (article.content){
+            article.content = article.content.replace(new RegExp('/blog_image/', 'g'), `${SERVER_URL}/images/`);
+          }
           dispatch(getArticle(article));
           console.log('resolving with breadcrumb: ', article.breadcrumb);
           dispatch(setBreadcrumb(article.breadcrumb));

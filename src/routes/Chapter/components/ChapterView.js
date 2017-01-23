@@ -29,7 +29,7 @@ export class chapter extends React.Component {
   }
 
   visitArticle(article) {
-    this.context.router.push(`article/${encodeURIComponent(article.path.replace(/\.md$/, ''))}`);
+    this.context.router.push(`/article/${encodeURIComponent(article.path.replace(/\.md$/, ''))}`);
   }
 
   articlesList() {

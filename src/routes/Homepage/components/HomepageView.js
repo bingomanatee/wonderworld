@@ -22,7 +22,6 @@ export class Homepage extends React.Component {
   }
 
   visitArticle(article) {
-    eval('debugger');
     this.context.router.push(`article/${encodeURIComponent(article.path.replace(/\.md$/, ''))}`);
   }
 

@@ -1,9 +1,10 @@
 import fetchPolyfill from 'fetch-polyfill'
 const moment = require('moment');
-class Articles {
+import {SERVER_URL} from '../config.js';
 
+class Articles {
   getArticle(path) {
-    return fetch(`http://localhost:3123/articles/article/${encodeURIComponent(path)}`)
+    return fetch(`${SERVER_URL}/articles/article/${encodeURIComponent(path)}`)
       .then((response) => response.json())
       .then((article) => {
         try {
@@ -32,7 +33,7 @@ class Articles {
 
   getHomepage() {
     console.log('getting homepage');
-    return fetch('http://localhost:3123/articles/homepage')
+    return fetch(`${SERVER_URL}/articles/homepage`)
       .then((response) => response.json())
       .then((articles) => _.map(articles, (article) => {
         try {
@@ -52,7 +53,7 @@ class Articles {
 
   getChapter(chapterPath) {
     console.log('getting homepage');
-    return fetch('http://localhost:3123/articles/chapter/' + chapterPath)
+    return fetch(`${SERVER_URL}/articles/chapter/${chapterPath}`)
       .then((response) => response.json())
       .then((articles) => _.map(articles, (article) => {
         try {
