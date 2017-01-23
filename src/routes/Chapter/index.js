@@ -1,7 +1,7 @@
 import { injectReducer } from '../../store/reducers';
 
 export default (store) => ({
-  path : 'chapter/:chapterPath',
+  path: 'chapter/:chapterPath',
   /*  Async getComponent is only invoked when route matches   */
   getComponent (nextState, cb) {
     /*  Webpack - use 'require.ensure' to create a split point
@@ -15,7 +15,7 @@ export default (store) => ({
 
       /*  Add the reducer to the store on key 'homepage'  */
       injectReducer(store, { key: 'chapter', reducer });
-      injectReducer(store, {key: 'breadcrumb', reducer: breadcrumbReducer});
+      injectReducer(store, { key: 'breadcrumb', reducer: breadcrumbReducer });
       /*  Return getComponent   */
       cb(null, Chapter);
 

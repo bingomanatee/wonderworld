@@ -8,8 +8,8 @@ export const BREADCRUMB_CHANGE = 'BREADCRUMB_CHANGE';
 // ------------------------------------
 export function setBreadcrumb (breadcrumb = []) {
   return {
-    type    : BREADCRUMB_CHANGE,
-    payload : breadcrumb
+    type: BREADCRUMB_CHANGE,
+    payload: breadcrumb
   };
 }
 

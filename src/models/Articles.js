@@ -1,9 +1,9 @@
-import fetchPolyfill from 'fetch-polyfill'
+import fetchPolyfill from 'fetch-polyfill';
 const moment = require('moment');
-import {SERVER_URL} from '../config.js';
+import { SERVER_URL } from '../config.js';
 
 class Articles {
-  getArticle(path) {
+  getArticle (path) {
     return fetch(`${SERVER_URL}/articles/article/${encodeURIComponent(path)}`)
       .then((response) => response.json())
       .then((article) => {
@@ -14,24 +14,24 @@ class Articles {
         }
         let folder = /^articles\/(.*)\/(.*\.md)$/.exec(article.path);
 
-        let breadcrumb = [{path: '/homepage', label: 'home'}]
+        let breadcrumb = [{ path: '/homepage', label: 'home' }];
         if (folder) {
           article.folder = folder[1];
-          breadcrumb.push({path: `/chapter/${article.folder}`, label: article.folder});
+          breadcrumb.push({ path: `/chapter/${article.folder}`, label: article.folder });
         } else {
           article.folder = '';
         }
         breadcrumb.push({
           label: article.title,
           path: '/articles/' + encodeURIComponent(article.path.replace(/\.md$/, ''))
-        })
+        });
         article.breadcrumb = breadcrumb;
         console.log('set breadcrumb to ', breadcrumb);
         return article;
       });
   }
 
-  getHomepage() {
+  getHomepage () {
     console.log('getting homepage');
     return fetch(`${SERVER_URL}/articles/homepage`)
       .then((response) => response.json())
@@ -51,7 +51,7 @@ class Articles {
       }));
   }
 
-  getChapter(chapterPath) {
+  getChapter (chapterPath) {
     console.log('getting homepage');
     return fetch(`${SERVER_URL}/articles/chapter/${chapterPath}`)
       .then((response) => response.json())

@@ -25,18 +25,18 @@ export const seriesToSegments = (series) => {
     .uniqBy((segment) => segment.join(','))
     .sortBy((segment) => segment[0])
     .value();
-}
+};
 
-export function list(ptArray) {
+export function list (ptArray) {
   return _.reduce(ptArray, (list, pt, i) => {
-    let prev = (i == 0) ? _.last(ptArray) : ptArray[i - 1];
+    let prev = (i === 0) ? _.last(ptArray) : ptArray[i - 1];
     list.push([prev.index, pt.index]);
     return _.sortBy(list, (series) => series[0]);
   }, []);
 }
 
 export class CdtPrepare {
-  constructor(innerPoints, topLeft, bottomRight) {
+  constructor (innerPoints, topLeft, bottomRight) {
     this._index = [];
     this._outerRegion = [];
     this._innerPoints = [];
@@ -44,17 +44,17 @@ export class CdtPrepare {
     this.registerOuterRegion(topLeft, bottomRight);
   }
 
-  cdt() {
+  cdt () {
     let points = _.map(this.index, (pt) => pt.array());
     let inner = list(this.innerPoints);
     let outer = list(this.outerPoints);
     //   console.log('points: ', JSON.stringify(points, true, 2));
     //   console.log('inner: ', JSON.stringify(inner, true, 2));
     //   console.log('outer: ', JSON.stringify(outer, true, 2));
-    return cdt(points, inner.concat(outer), {exterior: false, interior: true});
+    return cdt(points, inner.concat(outer), { exterior: false, interior: true });
   }
 
-  _triangulate(series) {
+  _triangulate (series) {
     return _.map(series, (indexes) => {
       return _.map(indexes, (i) => {
         return this.index[i];
@@ -62,16 +62,16 @@ export class CdtPrepare {
     });
   }
 
-  triangles(maxLength, maxIters) {
+  triangles (maxLength, maxIters) {
     let series;
     let iters = 0;
-    do {
+    if (maxLength) do {
       series = this.cdt();
-    } while ((++iters < maxIters) && maxLength && this._tesselate(maxLength, series, iters));
+    } while ((++iters < maxIters) && this._tesselate(maxLength, series, iters));
     return this._triangulate(series);
   }
 
-  _tesselate(max, series, iters) {
+  _tesselate (max, series, iters) {
     let segments = seriesToSegments(series);
     let tooLong = false;
     let map = new Map();
@@ -90,17 +90,17 @@ export class CdtPrepare {
       map.set(point.index, 'outer');
     }
     for (let segment of segments) {
-      let a_index = segment[0];
-      let b_index = segment[1];
+      let aIndex = segment[0];
+      let bIndex = segment[1];
 
-      let a = this.index[a_index];
-      let b = this.index[b_index];
+      let a = this.index[aIndex];
+      let b = this.index[bIndex];
 
-      let a_place = map.get(a_index);
-      let b_place = map.get(b_index);
+      let aPlace = map.get(aIndex);
+      let bPlace = map.get(bIndex);
 
-      if (b_place === a_place) {
-        if (a_place !== 'mid') {
+      if (bPlace === aPlace) {
+        if (aPlace !== 'mid') {
           continue;
         }
       }
@@ -119,19 +119,19 @@ export class CdtPrepare {
     return tooLong;
   }
 
-  hasPoint(pt) {
+  hasPoint (pt) {
     return !!_.find(this.index, (other) => {
       other.dist(pt) < 3;
     });
   }
 
-  registerInnerPoints(points) {
+  registerInnerPoints (points) {
     for (let point of points) {
       this.innerPoints.push(this.addPoint(point));
     }
   }
 
-  registerOuterRegion(topLeft, bottomRight) {
+  registerOuterRegion (topLeft, bottomRight) {
     let top = topLeft.y - OUTER_PAD;
     let bottom = bottomRight.y + OUTER_PAD;
     let left = topLeft.x - OUTER_PAD;
@@ -149,10 +149,9 @@ export class CdtPrepare {
     this.registerOuterRegionMidpoints(bottomRightIndexed, bottomLeftIndexed);
     this.outerPoints.push(bottomLeftIndexed);
     this.registerOuterRegionMidpoints(bottomLeftIndexed, topLeftIndexed);
-
   }
 
-  addPoint(point, y) {
+  addPoint (point, y) {
     if (arguments.length > 1) {
       point = new Point(point, y);
     }
@@ -161,23 +160,23 @@ export class CdtPrepare {
     return pointIndexed;
   }
 
-  get innerPoints() {
+  get innerPoints () {
     return this._innerPoints;
   }
 
-  set innerPoints(value) {
+  set innerPoints (value) {
     this._innerPoints = value;
   }
 
-  get outerPoints() {
+  get outerPoints () {
     return this._outerRegion;
   }
 
-  set outerPoints(value) {
+  set outerPoints (value) {
     this._outerRegion = value;
   }
 
-  _midpoints(a, b, size, min) {
+  _midpoints (a, b, size, min) {
     let distance = a.dist(b);
     let ratio = Math.ceil(distance / size);
     let divisor = Math.max(min, ratio);
@@ -189,13 +188,13 @@ export class CdtPrepare {
     return out;
   }
 
-  registerOuterRegionMidpoints(a, b) {
+  registerOuterRegionMidpoints (a, b) {
     for (let point of this._midpoints(a, b, MAX_OUTER_WIDTH, 2)) {
       this.outerPoints.push(this.addPoint(point));
     }
   }
 
-  get index() {
+  get index () {
     return this._index;
   }
 }

@@ -2,33 +2,33 @@ import React from 'react';
 import './homepage.scss';
 const moment = require('moment');
 import _ from 'lodash';
-import {browserHistory} from 'react-router';
-import ArticleListItem from '../../../components/ArticleListItem/ArticleListItem'
+import { browserHistory } from 'react-router';
+import ArticleListItem from '../../../components/ArticleListItem/ArticleListItem';
 
 export class Homepage extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     console.log('loading articles');
-    props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
+    props.setBreadcrumb([{ label: 'Home', path: '/homepage' }]);
   }
 
   static contextTypes = {
-    router: React.PropTypes.object,
+    router: React.PropTypes.object
   };
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.loadArticles();
   }
 
-  visitArticle(article) {
+  visitArticle (article) {
     this.context.router.push(`article/${encodeURIComponent(article.path.replace(/\.md$/, ''))}`);
   }
 
-  articlesList() {
+  articlesList () {
     if (!this.props.articles.length) {
-      return (<div className="article-list-item">
-        <div className="article-list-item-inner">
+      return (<div className='article-list-item'>
+        <div className='article-list-item-inner'>
           <p>Loading...</p>
         </div>
       </div>);
@@ -43,16 +43,16 @@ export class Homepage extends React.Component {
     return _(this.props.articles)
       .sortBy((article) => article.revisedMoment ? -article.revisedMoment.unix() : -100000)
       .map((article) => (
-        <ArticleListItem key={key(article)} article={article} visitArticle={visitArticle}></ArticleListItem>)).value();
+        <ArticleListItem key={key(article)} article={article} visitArticle={visitArticle} />)).value();
   }
 
-  render() {
+  render () {
     const list = this.articlesList();
     return (
-      <div className="content-frame__scrolling">
+      <div className='content-frame__scrolling'>
         { list }
       </div>
-    )
+    );
   }
 }
 

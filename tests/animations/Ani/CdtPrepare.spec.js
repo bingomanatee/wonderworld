@@ -1,4 +1,4 @@
-import {CdtPrepare, OUTER_PAD, list, lerp, seriesToSegments} from 'animation/CdtPrepare';
+import { CdtPrepare, OUTER_PAD, list, lerp, seriesToSegments } from 'animation/CdtPrepare';
 import Point from 'point-geometry';
 import _ from 'lodash';
 import PointIndexed from 'animation/PointIndexed';
@@ -8,7 +8,7 @@ describe('(function) lerp', () => {
   beforeEach(() => {
     pointA = new Point(100, 50);
     pointB = new Point(200, 75);
-  })
+  });
   it('should give a point close to second argument with ratio 1', () => {
     pointC = lerp(pointA, pointB, 1);
     expect(pointB.dist(pointC)).to.be.at.most(2);
@@ -31,7 +31,7 @@ describe('seriesToSegments', () => {
   ];
   it('should make segments', () => {
     let segments = seriesToSegments(series);
-    expect(segments).to.eql([[1,2],[1,4],[1,3],[2,4],[2,3],[3,4]]);
+    expect(segments).to.eql([[1, 2], [1, 4], [1, 3], [2, 4], [2, 3], [3, 4]]);
   });
 });
 
@@ -145,6 +145,6 @@ describe('(Class) CdtPrepare', () => {
           expect(e[ii].y).to.eql(t[ii].y);
         }
       }
-    })
+    });
   });
 });

@@ -1,23 +1,24 @@
+/* global createjs */
+
 export const RADIAN_CIRC = (Math.PI * 2);
 
-export function r2a(n) {
+export function r2a (n) {
   return 360 * n / RADIAN_CIRC;
 }
-export function a2r(n) {
+export function a2r (n) {
   return n * RADIAN_CIRC / 360;
 }
-export function rr(n) {
+export function rr (n) {
   let round = _wholeRad(n);
 
   if (round > Math.PI) {
-    return round - RADIAN_CIRC
-  }
-  else {
+    return round - RADIAN_CIRC;
+  } else {
     return round;
   }
 }
 
-export function rra(n) {
+export function rra (n) {
   let round = _wholeAngle(n);
   if (round > 180) {
     return round - 360;
@@ -26,7 +27,7 @@ export function rra(n) {
   }
 }
 
-export function _wholeAngle(n) {
+export function _wholeAngle (n) {
   n = n % 360;
   if (n < 0) {
     n += 360;
@@ -34,20 +35,19 @@ export function _wholeAngle(n) {
   return n;
 }
 
-export function _wholeRad(n) {
+export function _wholeRad (n) {
   n = n % RADIAN_CIRC;
   if (n < 0) {
     n += RADIAN_CIRC;
   }
   return n;
 }
-export function r(n, pow) {
+export function r (n, pow) {
   const scale = Math.pow(10, pow || 1);
   return Math.round(scale * n) / scale;
 }
 
 export const drawArc = (container, startAngle, degreeAngle, degreesPerSpoke, lineColor, radius) => {
-
   container.removeAllChildren();
   if (!radius) {
     radius = 100;
@@ -55,7 +55,6 @@ export const drawArc = (container, startAngle, degreeAngle, degreesPerSpoke, lin
 
   let shape = new createjs.Shape();
   container.addChild(shape);
-
 
   startAngle = _wholeAngle(startAngle);
   degreeAngle = _wholeAngle(degreeAngle);
@@ -72,7 +71,7 @@ export const drawArc = (container, startAngle, degreeAngle, degreesPerSpoke, lin
     .endStroke();
 
   const range = degreeAngle - startAngle;
-  let spokes = r(range/degreesPerSpoke);
+  let spokes = r(range / degreesPerSpoke);
   let text = new createjs.Text(`${r(_wholeAngle(range))}° span, ${r(spokes)} sp`,
     '16px Arial');
   text.x = radius * Math.cos(a2r(degreeAngle));
@@ -83,8 +82,8 @@ export const drawArc = (container, startAngle, degreeAngle, degreesPerSpoke, lin
   let text2 = new createjs.Text(`${r(_wholeAngle(range))}° span, ${r(spokes)} sp`,
     '16px Arial');
   text2.x = -1 + radius * Math.cos(a2r(degreeAngle));
-  text2.y =1 + radius * Math.sin(a2r(degreeAngle));
+  text2.y = 1 + radius * Math.sin(a2r(degreeAngle));
   text2.lineWidth = 50;
   text2.color = lineColor;
   container.addChild(text2);
-}
+};

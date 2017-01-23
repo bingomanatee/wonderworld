@@ -1,6 +1,6 @@
-import React, {Component, PropTypes} from 'react';
-import {browserHistory, Router} from 'react-router';
-import {Provider} from 'react-redux';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory, Router } from 'react-router';
+import { Provider } from 'react-redux';
 
 import Gears from '../animation/Gears';
 
@@ -10,23 +10,23 @@ class AppContainer extends Component {
     store: PropTypes.object.isRequired
   };
 
-  shouldComponentUpdate() {
+  shouldComponentUpdate () {
     return false;
   }
 
-  componentDidMount() {
+  componentDidMount () {
     if (typeof window !== 'undefined') {
       this.ani = new Gears(this.props.store, 'ani');
     }
   }
 
-  render() {
-    const {routes, store} = this.props;
+  render () {
+    const { routes, store } = this.props;
 
     return (
       <Provider store={store}>
-        <div className="content-frame">
-          <Router history={browserHistory} children={routes}/>
+        <div className='content-frame'>
+          <Router history={browserHistory} children={routes} />
         </div>
       </Provider>
     );

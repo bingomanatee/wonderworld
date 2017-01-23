@@ -1,8 +1,9 @@
 import Color from 'color';
+import _ from 'lodash';
 
 let swatchBasis = _.map([
-  Color.rgb(0,0,0),
-  Color.rgb(0,0,0),
+  Color.rgb(0, 0, 0),
+  Color.rgb(0, 0, 0),
   Color.rgb(90, 156, 221), // sky blue
   Color.rgb(181, 199, 206), // cloud
   Color.rgb(96, 118, 133), // mountain mist
@@ -14,7 +15,7 @@ let swatchBasis = _.map([
   Color.rgb(67, 80, 17),
   Color.rgb(90, 79, 23),
   Color.rgb(39, 25, 24),
-  Color.rgb(255,255,255)
+  Color.rgb(255, 255, 255)
 ], (c) => c.saturate(2));
 
 console.log(swatchBasis);
@@ -24,7 +25,7 @@ const COUNT = 4;
 export const SWATCH_HEIGHT = 80;
 const INCREMENT = 10;
 
-function _randomYs(count) {
+function _randomYs (count) {
   let seed = _.map([0, 0], () => _.random(-SWATCH_HEIGHT, SWATCH_HEIGHT));
 
   while (seed.length < count) {
@@ -47,17 +48,15 @@ function _randomYs(count) {
         let last = _.last(out);
         out.push(last, _.mean([last, value]));
         return out;
-      }, false)
+      }, false);
   }
 
   return seed;
 }
 
-
 export class Swatch {
 
-  constructor(ani, index, range) {
-
+  constructor (ani, index, range) {
     let si = Math.floor(swatchBasis.length * index / range);
     let baseColor = swatchBasis[_.clamp(si, 0, swatchBasis.length)];
     let mixColor = _.shuffle(swatchBasis).pop();
@@ -74,7 +73,7 @@ export class Swatch {
    *
    * @returns {Gears}
    */
-  get ani() {
+  get ani () {
     return this._ani;
   }
 
@@ -82,40 +81,39 @@ export class Swatch {
    *
    * @param value {Gears}
    */
-  set ani(value) {
+  set ani (value) {
     this._ani = value;
   }
 
-  get index() {
+  get index () {
     return this._index;
   }
 
-  set index(value) {
+  set index (value) {
     this._index = value;
   }
 
-  get range() {
+  get range () {
     return this._range;
   }
 
-  set range(value) {
+  set range (value) {
     this._range = value;
   }
 
-  initElement() {
+  initElement () {
     this.element = new createjs.Container();
     this.ani.background.addChild(this.element);
-    this.element.y = this.ani.height * (this.index - 2)/ this.range;
+    this.element.y = this.ani.height * (this.index - 2) / this.range;
 
     _.each(_.range(0, COUNT), () => {
       this.addShape();
     });
   }
 
-  addShape() {
-
+  addShape () {
     let s = new createjs.Shape();
-    s.alpha =  0.5/COUNT;
+    s.alpha = 0.5 / COUNT;
     s.x = 0;
     s.y = _.random(-20, 20);
     s.graphics.beginFill(this.color);

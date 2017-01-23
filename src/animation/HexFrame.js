@@ -10,38 +10,36 @@ const NEIGHBOR_LIST = [
   new Point(-1, 1)
 ];
 
-export function hexRoundCube(x, y, z) {
-  let rx = Math.round(x)
-  let ry = Math.round(y)
-  let rz = Math.round(z)
+export function hexRoundCube (x, y, z) {
+  let rx = Math.round(x);
+  let ry = Math.round(y);
+  let rz = Math.round(z);
 
-  let dx = Math.abs(rx - x)
-  let dy = Math.abs(ry - y)
-  let dz = Math.abs(rz - z)
+  let dx = Math.abs(rx - x);
+  let dy = Math.abs(ry - y);
+  let dz = Math.abs(rz - z);
 
   if (dx > dy && dx > dz) {
-    rx = -ry - rz
-  }
-  else if (dy > dz) {
-    ry = -rx - rz
-  }
-  else {
-    rz = -rx - ry
+    rx = -ry - rz;
+  } else if (dy > dz) {
+    ry = -rx - rz;
+  } else {
+    rz = -rx - ry;
   }
 
-  return [rx, ry, rz]
+  return [rx, ry, rz];
 }
 
-export function pixelToHexFlat(x, y, size) {
-  let q = x * (2 / 3) / size
-  let r = (-x / 3 + Math.sqrt(3) / 3 * y) / size
+export function pixelToHexFlat (x, y, size) {
+  let q = x * (2 / 3) / size;
+  let r = (-x / 3 + Math.sqrt(3) / 3 * y) / size;
   return hexRoundCube(q, r, -(q + r));
 }
 
-export function hexToPixelFlat(q, r, size) {
-  let x = size * (3 / 2) * q
-  let y = size * Math.sqrt(3) * (r + q / 2)
-  return [x, y]
+export function hexToPixelFlat (q, r, size) {
+  let x = size * (3 / 2) * q;
+  let y = size * Math.sqrt(3) * (r + q / 2);
+  return [x, y];
 }
 
 /**
@@ -56,22 +54,22 @@ const COS_30 = Math.cos(Math.PI / 6);
 
 export default class HexFrame {
 
-  constructor(ani, radius) {
+  constructor (ani, radius) {
     this.ani = ani;
     this.radius = radius;
   }
 
-  hexToPoint(hX, hY) {
-    let data = hexToPixelFlat(hX, hY, this.radius)
+  hexToPoint (hX, hY) {
+    let data = hexToPixelFlat(hX, hY, this.radius);
     return new Point(data[0], data[1]);
   }
 
-  pointToHex(x, y) {
+  pointToHex (x, y) {
     let data = pixelToHexFlat(x, y, this.radius);
     return new Point(data[0], data[1]);
   }
 
-  hexPoints(hX, hY) {
+  hexPoints (hX, hY) {
     let center = this.hexToPoint(hX, hY);
 
     return {
@@ -82,7 +80,7 @@ export default class HexFrame {
     };
   }
 
-  hexes() {
+  hexes () {
     let points = _.map(this._boundsRect, (pt) => this.pointToHex(pt.x, pt.y));
     let xs = _.map(points, 'x');
     let ys = _.map(points, 'y');
@@ -94,7 +92,7 @@ export default class HexFrame {
     let count = 0;
     let skipped = 0;
 
-    for (let x of _.range(_.min(xs), _.max(xs) + 1))
+    for (let x of _.range(_.min(xs), _.max(xs) + 1)) {
       for (let y of _.range(_.min(ys), _.max(ys) + 1)) {
         let center = this.hexToPoint(x, y);
         if (this.inBounds(center.x, center.y)) {
@@ -104,15 +102,16 @@ export default class HexFrame {
           ++skipped;
         }
       }
+    }
     this.hexesIndex = _.keyBy(out, (item) => this._pointIndex(item.hX, item.hY));
     return out;
   }
 
-  _pointIndex(x, y) {
+  _pointIndex (x, y) {
     return `${x},${y}`;
   }
 
-  neighbors(x, y) {
+  neighbors (x, y) {
     let out = _(NEIGHBOR_LIST)
       .map((point) => {
         let index = this._pointIndex(point.x + x, point.y + y);
@@ -121,7 +120,7 @@ export default class HexFrame {
     return out;
   }
 
-  inBounds(x, y) {
+  inBounds (x, y) {
     if (x < this._minBound.x) {
       return false;
     }
@@ -140,19 +139,19 @@ export default class HexFrame {
   /* --------------- dimension properties ------------ */
 
   _ani
-  get ani() {
+  get ani () {
     return this._ani;
   }
 
-  set ani(value) {
+  set ani (value) {
     this._ani = value;
   }
 
-  get radius() {
+  get radius () {
     return this._radius;
   }
 
-  set radius(rad) {
+  set radius (rad) {
     this._radius = rad;
     this.diameter = 2 * rad;
     this.height = COS_30 * rad;
@@ -162,7 +161,7 @@ export default class HexFrame {
     this._setBounds();
   }
 
-  _setHexTemplate() {
+  _setHexTemplate () {
     let top = -this.height;
     let bottom = this.height;
     let right = this.radius;
@@ -180,8 +179,7 @@ export default class HexFrame {
     ];
   }
 
-  _setBounds() {
-
+  _setBounds () {
     /**
      * because the coord system of the hex system is different than
      * the cartesian rectangle, we define the bounds rect as four points
@@ -211,20 +209,20 @@ export default class HexFrame {
   }
 
   _diameter
-  get diameter() {
+  get diameter () {
     return this._diameter;
   }
 
-  set diameter(value) {
+  set diameter (value) {
     this._diameter = value;
   }
 
   _height
-  get height() {
+  get height () {
     return this._height;
   }
 
-  set height(value) {
+  set height (value) {
     this._height = value;
   }
 }

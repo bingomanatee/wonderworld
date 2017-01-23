@@ -2,7 +2,7 @@ import Point from 'point-geometry';
 import _ from 'lodash';
 
 export default class PointIndexed extends Point {
-  constructor(x, y, index) {
+  constructor (x, y, index) {
     if (_.isObject(x)) {
       index = y;
       y = x.y;
@@ -13,30 +13,30 @@ export default class PointIndexed extends Point {
     this._triangles = [];
   }
 
-  removeTriangle(triangle) {
+  removeTriangle (triangle) {
     this.triangles = _.filter(this.triangles, (other) => {
       triangle.id === other.id;
     });
   }
 
-  get triangles() {
+  get triangles () {
     return this._triangles;
   }
 
-  set triangles(value) {
+  set triangles (value) {
     this._triangles = value;
   }
 
-  get index() {
+  get index () {
     return this._index;
   }
 
-  set index(value) {
+  set index (value) {
     this._index = value;
   }
 
-  array() {
+  array () {
     let rx = this.round();
-    return [rx.x, rx.y]
+    return [rx.x, rx.y];
   }
 }

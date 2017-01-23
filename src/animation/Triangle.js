@@ -8,11 +8,11 @@ const _pointsToLine = (list) => {
     out.push(pt.y);
     return out;
   }, []);
-}
+};
 
 let _id = 0;
 export default class Triangle {
-  constructor(points, ani) {
+  constructor (points, ani) {
     this.id = ++_id;
     this.points = points;
     _.each(this.points, (point) => point.triangles.push(this));
@@ -31,27 +31,30 @@ export default class Triangle {
     }
   }
 
-  get state() {
+  get state () {
     return this._state;
   }
 
   get center () {
     return _.reduce(this.points, (out, pt) => {
-      if (!out) return pt;
+      if (!out) {
+        return pt;
+      }
       return out.add(pt);
-    }, false ).div(3);
-  }
-  set state(value) {
-    this._state = value;
-  /* if (value !== 'on'){
-      this.ani.snap.circle(this.center.x, this.center.y, 2)
-        .attr({
-          fill: 'black'
-        });
-    } */
+    }, false).div(3);
   }
 
-  startTint() {
+  set state (value) {
+    this._state = value;
+    /* if (value !== 'on'){
+     this.ani.snap.circle(this.center.x, this.center.y, 2)
+     .attr({
+     fill: 'black'
+     });
+     } */
+  }
+
+  startTint () {
     let tint = {
       r: _.random(-20, 50),
       g: _.random(-20, 50),
@@ -61,7 +64,7 @@ export default class Triangle {
     this.tint(tint);
   }
 
-  tint(tint) {
+  tint (tint) {
     if (!this.tinted) {
       this.color.r += tint.r;
       this.color.g += tint.g;
@@ -81,15 +84,15 @@ export default class Triangle {
     }, 5);
   }
 
-  setColor() {
+  setColor () {
     let ys = _(this.points).map('y').sortBy().uniq().value();
     let top = _.max(ys);
     let bottom = _.min(ys);
     let range = top - bottom;
     let average = _.sum(_.map(ys, (y) => y - bottom)) / ys.length;
     let balance = average / (2 * range);
-    balance = _.clamp(Math.pow(balance, 1/4), 0.3, 0.6);
-    balance += _.random(-5, 6)/100;
+    balance = _.clamp(Math.pow(balance, 1 / 4), 0.3, 0.6);
+    balance += _.random(-5, 6) / 100;
     let color = 255 * balance;
     let loColor = Math.floor(color * 0.8);
     this.color = {
@@ -99,19 +102,19 @@ export default class Triangle {
     };
   }
 
-  get color() {
+  get color () {
     return this._color;
   }
 
-  set color(value) {
+  set color (value) {
     this._color = value;
   }
 
-  get colorRGB() {
+  get colorRGB () {
     return `rgb(${cc(this._color.r)},${cc(this._color.g)},${cc(this._color.b)})`;
   }
 
-  draw() {
+  draw () {
     let line = _pointsToLine(this.points);
 
     this.setColor();
@@ -119,38 +122,38 @@ export default class Triangle {
     this.colorElement();
   }
 
-  colorElement() {
+  colorElement () {
     this.element.attr({
       fill: this.colorRGB,
       stroke: this.colorRGB
     });
   }
 
-  get element() {
+  get element () {
     return this._et;
   }
 
-  set element(value) {
+  set element (value) {
     this._et = value;
   }
 
-  get points() {
+  get points () {
     return this._t;
   }
 
-  set points(value) {
+  set points (value) {
     this._t = value;
   }
 
-  get ani() {
+  get ani () {
     return this._ani;
   }
 
-  set ani(value) {
+  set ani (value) {
     this._ani = value;
   }
 
-  neighbors(includeThis, all) {
+  neighbors (includeThis, all) {
     return _(this.points)
       .map((point) => point.triangles)
       .flatten()
@@ -160,7 +163,7 @@ export default class Triangle {
       .value();
   }
 
-  near(other) {
+  near (other) {
     let sharedPoints = 0;
     for (let prop in this.indices) {
       if (other.indices[prop]) {
@@ -173,13 +176,13 @@ export default class Triangle {
     return false;
   }
 
-  hasActiveNeighbors() {
+  hasActiveNeighbors () {
     return _(this.neighbors())
       .filter((other) => other._state === 'on')
       .value().length;
   }
 
-  destroy() {
+  destroy () {
     this.element.remove();
     _.each(this.points, (point) => {
       point.removeTriangle(this);

@@ -11,8 +11,7 @@ import HeaderView from '../components/Header/Header';
  Keys will be passed as props to presentational components. Here we are
  implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 const mapStateToProps = (state) => ({
   breadcrumb: state.breadcrumb

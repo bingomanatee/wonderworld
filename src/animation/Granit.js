@@ -1,16 +1,16 @@
 const W = require('./points.json');
-import {CdtPrepare} from 'animation/CdtPrepare';
+import { CdtPrepare } from 'animation/CdtPrepare';
 import Point from 'point-geometry';
 import _ from 'lodash';
 
 import Triangle from 'animation/Triangle';
 
 export default class Ani {
-  constructor(store, id) {
+  constructor (store, id) {
     this.init(store, id);
   }
 
-  init(store, id) {
+  init (store, id) {
     this.id = id;
     this.snap = Snap(id);
     this.initW();
@@ -20,12 +20,12 @@ export default class Ani {
     });
   }
 
-  reset() {
+  reset () {
     this.snap.clear();
     this.triangles = [];
   }
 
-  remove(triangle) {
+  remove (triangle) {
     let index = _.findIndex(this.triangles, (o) => o.id === triangle.id);
     if (index >= 0) {
       this.triangles.splice(index, 1);
@@ -34,34 +34,34 @@ export default class Ani {
     }
   }
 
-  get triangles() {
+  get triangles () {
     return this._triangles;
   }
 
-  set triangles(t) {
+  set triangles (t) {
     this._triangles = t;
   }
 
-  get width() {
+  get width () {
     return window.innerWidth;
   }
 
-  get height() {
+  get height () {
     return window.innerHeight;
   }
 
-  get center() {
+  get center () {
     return new Point(this.width, this.height).div(2);
   }
 
-  burnout() {
+  burnout () {
     this.reset();
     let Wpoly = this.snap.polyline(this.wPolyPointsList)
       .attr({
         fill: 'white'
       });
 
-    this.snap.circle(this.center.x, this.center.y, 3).attr({fill: 'black'});
+    this.snap.circle(this.center.x, this.center.y, 3).attr({ fill: 'black' });
 
     let prep = new CdtPrepare(this.wPolyPoints.reverse(), new Point(0, 0), new Point(this.width, this.height));
     let triangles = prep.triangles(60, 3);
@@ -78,7 +78,7 @@ export default class Ani {
     }, 2000);
   }
 
-  fadeGroup() {
+  fadeGroup () {
     let triangle;
     let triangles;
     let center = this.center;
@@ -133,14 +133,14 @@ export default class Ani {
         .scale(scale, scale, center.x, center.y / -2);
 
       group.animate({
-          transform: matrix,
-          opacity: 0.75
-        }, _.random(400, 1500),
+        transform: matrix,
+        opacity: 0.75
+      }, _.random(400, 1500),
         window.mina.easein, () => {
-          group.animate({opacity: 0}, _.random(800, 1500), window.mina.easein, () => {
+          group.animate({ opacity: 0 }, _.random(800, 1500), window.mina.easein, () => {
             group.remove();
             _.each(triangles, (triangle) => triangle.destroy());
-          })
+          });
         });
     }
 
@@ -149,7 +149,7 @@ export default class Ani {
     }
   }
 
-  fadeOrphans() {
+  fadeOrphans () {
     let orphans = _(this.triangles)
       .map((triangle) => triangle.neighbors())
       .flatten()
@@ -160,7 +160,7 @@ export default class Ani {
     }
   }
 
-  _red1() {
+  _red1 () {
     let trianglesCopy = (this.triangles);
 
     this.groups = [];
@@ -188,26 +188,26 @@ export default class Ani {
       // console.log('extremes', minExtreme, maxExtreme);
 
       setTimeout(() => {
-        group.animate({transform: matrix}, _.random(250, 1000),
+        group.animate({ transform: matrix }, _.random(250, 1000),
           window.mina.easeout,
           () => {
-            group.animate({opacity: 0}, _.random(100, 500))
+            group.animate({ opacity: 0 }, _.random(100, 500));
           }
-        )
+        );
       }, _.random(minExtreme, maxExtreme));
       this.groups.push(group);
     }
   }
 
-  get groups() {
+  get groups () {
     return this._groups;
   }
 
-  set groups(g) {
+  set groups (g) {
     this._groups = g;
   }
 
-  get wPolyPoints() {
+  get wPolyPoints () {
     let offset = this.center.sub(this.range.mid);
     let out = [];
     for (let p of this.wPoints) {
@@ -217,7 +217,7 @@ export default class Ani {
     return out;
   }
 
-  get wPolyPointsList() {
+  get wPolyPointsList () {
     let offset = this.center.sub(this.range.mid);
     let out = [];
     for (let p of this.wPolyPoints) {
@@ -227,7 +227,7 @@ export default class Ani {
     return out;
   }
 
-  initW() {
+  initW () {
     let values = W.points.slice();
     this.wPoints = [];
     while (values.length) {
@@ -242,7 +242,6 @@ export default class Ani {
           min: pt.clone(),
           max: pt.clone()
         };
-
       } else {
         if (pt.x < extent.min.x) {
           extent.min.x = pt.x;

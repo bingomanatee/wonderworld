@@ -4,7 +4,7 @@ import PageBackground from './PageBackground';
 import _ from 'lodash';
 
 export default class Gears {
-  constructor(store, id) {
+  constructor (store, id) {
     this.init(store, id);
     this.initCanvas();
     $(window).resize(_.debounce(() => {
@@ -12,7 +12,7 @@ export default class Gears {
     }, 500));
   }
 
-  initCanvas() {
+  initCanvas () {
     this.canvasElement = $(`#${this.id}`);
     this.canvasElement.empty();
     const canvasId = `${this.id}_canvas`;
@@ -43,15 +43,15 @@ export default class Gears {
 
   _canvasElement
 
-  get canvasElement() {
+  get canvasElement () {
     return this._canvasElement;
   }
 
-  set canvasElement(value) {
+  set canvasElement (value) {
     this._canvasElement = value;
   }
 
-  init(store, id) {
+  init (store, id) {
     this.gearz = [];
     this.id = id;
     store.subscribe(() => {
@@ -65,54 +65,54 @@ export default class Gears {
       if (this.background) {
         this.background.update(event);
       }
-    }
+    };
     createjs.Ticker.framerate = 60;
-    createjs.Ticker.addEventListener("tick", handleTick);
+    createjs.Ticker.addEventListener('tick', handleTick);
   }
 
-  get bgCanvasId() {
+  get bgCanvasId () {
     return `${this.id}_back`;
   }
 
-  get bgCanvasIdCrawl() {
+  get bgCanvasIdCrawl () {
     return `${this.id}_back_crawl`;
   }
 
-  get bgCanvasId2() {
+  get bgCanvasId2 () {
     return `${this.id}_back_2`;
   }
 
   _canvas
 
-  get canvas() {
+  get canvas () {
     return this._canvas;
   }
 
-  set canvas(value) {
+  set canvas (value) {
     this._canvas = value;
   }
 
-  get gearz() {
+  get gearz () {
     return this._gearz;
   }
 
-  set gearz(value) {
+  set gearz (value) {
     this._gearz = value;
   }
 
-  get width() {
+  get width () {
     return window.innerWidth;
   }
 
-  get height() {
+  get height () {
     return window.innerHeight;
   }
 
-  get center() {
+  get center () {
     return new Point(this.width, this.height).div(2);
   }
 
-  get spokeScale() {
+  get spokeScale () {
     if (this.width < 1200) {
       return 0.5;
     } else {

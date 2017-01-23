@@ -1,7 +1,6 @@
-
 let _nextId = 0;
 export default class LetterDiv {
-  constructor(ani, letter, size, color, letterSize){
+  constructor (ani, letter, size, color, letterSize) {
     this.ani = ani;
     this.letter = letter;
     this.letterSize = letterSize;
@@ -9,95 +8,94 @@ export default class LetterDiv {
     this._y = 0;
     this.id = ++_nextId;
     let divId = `wllLetter-${this.id}`;
-     this.ani.canvasElement
-       .find('#ani-letters')
-       .append(`<div class="wll-letter" id="${divId}" >
-<div class="wll-letter__character" style="color: ${color}; font-size: ${letterSize}px; line-height: ${ letterSize}px">${letter.toUpperCase()}</div>
+    this.ani.canvasElement
+      .find('#ani-letters')
+      .append(`<div class="wll-letter" id="${divId}" >
+<div class="wll-letter__character" style="color: ${color}; font-size: ${letterSize}px; line-height: ${letterSize}px">${letter.toUpperCase()}</div>
 </div>`);
     this._element = this.ani.canvasElement.find(`#${divId}`);
     this.size = size;
     this.color = color;
-
   }
 
   _color
-  get color() {
+  get color () {
     return this._color;
   }
 
-  set color(value) {
+  set color (value) {
     this._color = value;
   }
 
   _size
 
-  get size() {
+  get size () {
     return this._size;
   }
 
-  set size(value) {
+  set size (value) {
     this._size = value;
   }
 
-  hide() {
+  hide () {
     this.element.hide();
   }
 
-  show() {
-  //  this.element.show();
+  show () {
+    //  this.element.show();
   }
 
-  get element() {
+  get element () {
     return this._element;
   }
 
-  set element(value) {
+  set element (value) {
     this._element = value;
   }
 
   _id
 
-  get id() {
+  get id () {
     return this._id;
   }
 
-  set id(value) {
+  set id (value) {
     this._id = value;
   }
 
-  get ani() {
+  get ani () {
     return this._ani;
   }
 
-  set ani(value) {
+  set ani (value) {
     this._ani = value;
   }
 
-  get letter() {
+  get letter () {
     return this._letter;
   }
 
-  set letter(value) {
+  set letter (value) {
     this._letter = value;
   }
 
   _x
   _y
 
-  get x() {
+  get x () {
     return this._x;
   }
 
-  set x(value) {
+  set x (value) {
     this._x = value;
-   this.element.css('left', `${value - 100}px`);
+    this.element.css('left', `${value - 100}px`);
   }
 
-  get y() {
+  get y () {
     return this._y;
   }
 
-  set y(value) {
+  set y (value) {
     this._y = value;
     this.element.css('top', `${value - 100}px`);
   }

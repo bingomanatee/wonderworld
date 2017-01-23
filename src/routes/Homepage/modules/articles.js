@@ -8,7 +8,7 @@ export const GET_ARTICLES = 'GET_ARTICLES';
 // Actions
 // ------------------------------------
 
-export function getArticles(value = []) {
+export function getArticles (value = []) {
   return {
     type: GET_ARTICLES,
     payload: value
@@ -44,7 +44,7 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [GET_ARTICLES]: (state, action) => Object.assign({}, state, {articles: action.payload})
+  [GET_ARTICLES]: (state, action) => Object.assign({}, state, { articles: action.payload })
 };
 
 // ------------------------------------
@@ -53,7 +53,7 @@ const ACTION_HANDLERS = {
 const initialState = {
   articles: []
 };
-export default function homepageReducer(state = initialState, action) {
+export default function homepageReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
 
   return handler ? handler(state, action) : state;

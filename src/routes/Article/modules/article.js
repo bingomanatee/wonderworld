@@ -1,6 +1,6 @@
 import articleModel from '../../../models/Articles';
-import {setBreadcrumb} from '../../../store/breadcrumb';
-import {SERVER_URL} from '../../../config';
+import { setBreadcrumb } from '../../../store/breadcrumb';
+import { SERVER_URL } from '../../../config';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -10,7 +10,7 @@ export const GET_ARTICLE = 'GET_ARTICLE';
 // Actions
 // ------------------------------------
 
-export function getArticle(value = {}) {
+export function getArticle (value = {}) {
   return {
     type: GET_ARTICLE,
     payload: value
@@ -30,8 +30,8 @@ export const loadArticle = (articlepath) => {
     return new Promise((resolve) => {
       articleModel.getArticle(articlepath)
         .then((article) => {
-        console.log('retrieved article: ', article);
-          if (article.content){
+          console.log('retrieved article: ', article);
+          if (article.content) {
             article.content = article.content.replace(new RegExp('/blog_image/', 'g'), `${SERVER_URL}/images/`);
           }
           dispatch(getArticle(article));
@@ -52,7 +52,7 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [GET_ARTICLE]: (state, action) => Object.assign({}, state, {article: action.payload})
+  [GET_ARTICLE]: (state, action) => Object.assign({}, state, { article: action.payload })
 };
 
 // ------------------------------------
@@ -61,7 +61,7 @@ const ACTION_HANDLERS = {
 const initialState = {
   article: {}
 };
-export default function articleReducer(state = initialState, action) {
+export default function articleReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
 
   return handler ? handler(state, action) : state;
