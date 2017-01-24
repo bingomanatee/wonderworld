@@ -2,7 +2,7 @@ import Point from 'point-geometry';
 import Gear from './Gear';
 import PageBackground from './PageBackground';
 import _ from 'lodash';
-
+/* global $, createjs */
 export default class Gears {
   constructor (store, id) {
     this.init(store, id);

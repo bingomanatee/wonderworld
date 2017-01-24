@@ -1,6 +1,6 @@
-import fetchPolyfill from 'fetch-polyfill';
 const moment = require('moment');
-import { SERVER_URL } from '../config.js';
+import {SERVER_URL} from '../config.js';
+import _ from 'lodash';
 
 class Articles {
   getArticle (path) {
@@ -14,10 +14,10 @@ class Articles {
         }
         let folder = /^articles\/(.*)\/(.*\.md)$/.exec(article.path);
 
-        let breadcrumb = [{ path: '/homepage', label: 'home' }];
+        let breadcrumb = [{path: '/homepage', label: 'home'}];
         if (folder) {
           article.folder = folder[1];
-          breadcrumb.push({ path: `/chapter/${article.folder}`, label: article.folder });
+          breadcrumb.push({path: `/chapter/${article.folder}`, label: article.folder});
         } else {
           article.folder = '';
         }

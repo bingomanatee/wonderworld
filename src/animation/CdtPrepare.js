@@ -51,7 +51,7 @@ export class CdtPrepare {
     //   console.log('points: ', JSON.stringify(points, true, 2));
     //   console.log('inner: ', JSON.stringify(inner, true, 2));
     //   console.log('outer: ', JSON.stringify(outer, true, 2));
-    return cdt(points, inner.concat(outer), { exterior: false, interior: true });
+    return cdt(points, inner.concat(outer), {exterior: false, interior: true});
   }
 
   _triangulate (series) {
@@ -64,10 +64,12 @@ export class CdtPrepare {
 
   triangles (maxLength, maxIters) {
     let series;
-    let iters = 0;
-    if (maxLength) do {
-      series = this.cdt();
-    } while ((++iters < maxIters) && this._tesselate(maxLength, series, iters));
+    if (maxLength) {
+      let iters = 0;
+      do {
+        series = this.cdt();
+      } while ((++iters < maxIters) && this._tesselate(maxLength, series, iters));
+    }
     return this._triangulate(series);
   }
 

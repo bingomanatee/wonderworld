@@ -158,8 +158,7 @@ export default class Triangle {
       .map((point) => point.triangles)
       .flatten()
       .uniqBy('id')
-      .filter((other) => includeThis || (other.id !== this.id)
-      && (all || this.near(other)))
+      .filter((other) => includeThis || (other.id !== this.id) && (all || this.near(other)))
       .value();
   }
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import './homepage.scss';
-const moment = require('moment');
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
 import ArticleListItem from '../../../components/ArticleListItem/ArticleListItem';
 
 export class Homepage extends React.Component {
@@ -10,7 +8,7 @@ export class Homepage extends React.Component {
   constructor (props) {
     super(props);
     console.log('loading articles');
-    props.setBreadcrumb([{ label: 'Home', path: '/homepage' }]);
+    props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
   }
 
   static contextTypes = {

@@ -44,7 +44,7 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [GET_ARTICLES]: (state, action) => Object.assign({}, state, { articles: action.payload })
+  [GET_ARTICLES]: (state, action) => Object.assign({}, state, {articles: action.payload})
 };
 
 // ------------------------------------

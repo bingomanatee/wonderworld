@@ -87,19 +87,11 @@ export default class HexFrame {
 
     let out = [];
 
-    // eval('debugger');
-
-    let count = 0;
-    let skipped = 0;
-
     for (let x of _.range(_.min(xs), _.max(xs) + 1)) {
       for (let y of _.range(_.min(ys), _.max(ys) + 1)) {
         let center = this.hexToPoint(x, y);
         if (this.inBounds(center.x, center.y)) {
           out.push(this.hexPoints(x, y));
-          ++count;
-        } else {
-          ++skipped;
         }
       }
     }

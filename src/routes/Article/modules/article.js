@@ -1,6 +1,6 @@
 import articleModel from '../../../models/Articles';
-import { setBreadcrumb } from '../../../store/breadcrumb';
-import { SERVER_URL } from '../../../config';
+import {setBreadcrumb} from '../../../store/breadcrumb';
+import {SERVER_URL} from '../../../config';
 // ------------------------------------
 // Constants
 // ------------------------------------
@@ -52,7 +52,7 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [GET_ARTICLE]: (state, action) => Object.assign({}, state, { article: action.payload })
+  [GET_ARTICLE]: (state, action) => Object.assign({}, state, {article: action.payload})
 };
 
 // ------------------------------------

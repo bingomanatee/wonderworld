@@ -1,9 +1,5 @@
-/*
- export const DIST_BETWEEN_SPOKES = 10;
- const SPOKE_ANGLE_DEG = 40;
- export const HEIGHT_OF_SPOKE = 8; // radial distance of spoke from edge of gear;
- const RING_HEIGHT = 3;
- */
+/* global createjs */
+
 export const DIST_BETWEEN_SPOKES = 15;
 const SPOKE_ANGLE_DEG = 20;
 export const HEIGHT_OF_SPOKE = 8; // radial distance of spoke from edge of gear;

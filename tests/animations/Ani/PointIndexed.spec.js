@@ -1,6 +1,5 @@
 import PointIndexed from 'animation/PointIndexed';
 import Point from 'point-geometry';
-import _ from 'lodash';
 
 describe('(Class) PointIndexed', () => {
   let pti;

@@ -1,6 +1,5 @@
-import { CdtPrepare, OUTER_PAD, list, lerp, seriesToSegments } from 'animation/CdtPrepare';
+import {CdtPrepare, list, lerp, seriesToSegments} from 'animation/CdtPrepare';
 import Point from 'point-geometry';
-import _ from 'lodash';
 import PointIndexed from 'animation/PointIndexed';
 
 describe('(function) lerp', () => {

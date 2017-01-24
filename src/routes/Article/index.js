@@ -1,4 +1,4 @@
-import { injectReducer } from '../../store/reducers';
+import {injectReducer} from '../../store/reducers';
 
 export default (store) => ({
   path: 'article/:articlepath',
@@ -14,8 +14,8 @@ export default (store) => ({
       const breadcrumbReducer = require('../../store/breadcrumb').default;
 
       /*  Add the reducer to the store on key 'article'  */
-      injectReducer(store, { key: 'article', reducer });
-      injectReducer(store, { key: 'breadcrumb', reducer: breadcrumbReducer });
+      injectReducer(store, {key: 'article', reducer});
+      injectReducer(store, {key: 'breadcrumb', reducer: breadcrumbReducer});
       /*  Return getComponent   */
       cb(null, Article);
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import { Counter } from 'routes/HomeView/components/HomeView';
-import { shallow } from 'enzyme';
+import {bindActionCreators} from 'redux';
+import {Counter} from 'routes/HomeView/components/HomeView';
+import {shallow} from 'enzyme';
 
 describe('(Component) HomeView', () => {
   let _props, _spies, _wrapper;
@@ -28,7 +28,7 @@ describe('(Component) HomeView', () => {
 
   it('Should render props.counter at the end of the sample counter <h2>.', () => {
     expect(_wrapper.find('h2').text()).to.match(/5$/);
-    _wrapper.setProps({ counter: 8 });
+    _wrapper.setProps({counter: 8});
     expect(_wrapper.find('h2').text()).to.match(/8$/);
   });
 

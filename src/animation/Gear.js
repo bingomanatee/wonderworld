@@ -1,8 +1,7 @@
-import GearShape from './GearShape';
 import _ from 'lodash';
-import { DIST_BETWEEN_SPOKES, HEIGHT_OF_SPOKE } from './GearShape';
+import GearShape, {HEIGHT_OF_SPOKE} from './GearShape';
 import rebound from 'rebound';
-import { r2a, drawArc } from './angleUtils';
+import {r2a, drawArc} from './angleUtils';
 import LetterDiv from './LetterDiv';
 let springSystem = new rebound.SpringSystem();
 /* global createjs */
@@ -35,8 +34,7 @@ export default class Gear extends Point {
    */
   constructor (ani, x, y, rad, letter, letterSize) {
     super(x, y);
-    this._rad = rad;
-    this._ani = ani;
+    this.ani = ani;
     this.radius = rad;
     this.letter = letter || '';
     this._rotation = 0; // do NOT use the property! will start things churning
@@ -248,20 +246,6 @@ export default class Gear extends Point {
     for (let child of this.childGears) {
       child.setRotationFromParent();
     }
-  }
-
-  /**
-   *
-   * @param value {float}
-   */
-
-  /** deprecated -- using letter div now */
-  get letterShape () {
-    return this._letter || '';
-  }
-
-  set letterShape (value) {
-    this._letter = value;
   }
 
   get ani () {

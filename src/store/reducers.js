@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import {combineReducers} from 'redux';
 import locationReducer from './location';
 import breadcrumbReducer from './breadcrumb';
 
@@ -10,7 +10,7 @@ export const makeRootReducer = (asyncReducers) => {
   });
 };
 
-export const injectReducer = (store, { key, reducer }) => {
+export const injectReducer = (store, {key, reducer}) => {
   if (Object.hasOwnProperty.call(store.asyncReducers, key)) {
     return;
   }

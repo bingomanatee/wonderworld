@@ -3,7 +3,7 @@ import Header from '../../containers/HeaderContainer';
 import './CoreLayout.scss';
 import '../../styles/core.scss';
 
-export const CoreLayout = ({ children }) => (
+export const CoreLayout = ({children}) => (
   <div className='core-layout'>
     <Header />
     <div className='core-layout__viewport'>

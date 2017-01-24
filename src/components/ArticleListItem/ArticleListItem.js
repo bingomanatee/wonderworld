@@ -1,7 +1,6 @@
 import React from 'react';
-import { IndexLink, Link } from 'react-router';
 import './articleListItem.scss';
-import { FolderLabel } from '../FolderLabel/FolderLabel';
+import {FolderLabel} from '../FolderLabel/FolderLabel';
 
 export const ArticleListItem = (props) => (
   <div className='article-list-item'

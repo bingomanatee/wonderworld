@@ -1,8 +1,7 @@
 import React from 'react';
 import './chapter.scss';
-const moment = require('moment');
 import _ from 'lodash';
-import { browserHistory } from 'react-router';
+
 import ArticleListItem from '../../../components/ArticleListItem/ArticleListItem';
 
 export class chapter extends React.Component {
@@ -10,7 +9,7 @@ export class chapter extends React.Component {
   constructor (props) {
     super(props);
     console.log('loading articles');
-    props.setBreadcrumb([{ label: 'Home', path: '/homepage' }]);
+    props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
   }
 
   static contextTypes = {
@@ -62,6 +61,7 @@ export class chapter extends React.Component {
 
 chapter.propTypes = {
   articles: React.PropTypes.array,
+  params: React.PropTypes.object,
   loadArticles: React.PropTypes.func.isRequired,
   getArticles: React.PropTypes.func.isRequired,
   setBreadcrumb: React.PropTypes.func

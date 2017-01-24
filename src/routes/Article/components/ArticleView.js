@@ -1,9 +1,6 @@
 import React from 'react';
 import './article.scss';
-const moment = require('moment');
-import _ from 'lodash';
 import marked from 'marked';
-import { SERVER_URL } from '../../../config';
 export class ArticleView extends React.Component {
 
   constructor (props) {
@@ -12,7 +9,7 @@ export class ArticleView extends React.Component {
   }
 
   componentDidMount () {
-    this.props.setBreadcrumb([{ label: 'Home', path: '/homepage' }]);
+    this.props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
     console.log('getting article', this.props.params.articlepath);
     this.props.loadArticle(this.props.params.articlepath);
   }
@@ -26,9 +23,9 @@ export class ArticleView extends React.Component {
 
   content () {
     if (!(this.props.article && this.props.article.content)) {
-      return { __html: '<p>loading...</p>' };
+      return {__html: '<p>loading...</p>'};
     } else {
-      return { __html: marked(this.props.article.content) };
+      return {__html: marked(this.props.article.content)};
     }
   }
 
@@ -49,8 +46,8 @@ export class ArticleView extends React.Component {
 }
 
 ArticleView.propTypes = {
+  params: React.PropTypes.object,
   article: React.PropTypes.object,
-  articlepath: React.PropTypes.string,
   loadArticle: React.PropTypes.func.isRequired,
   getArticle: React.PropTypes.func.isRequired,
   setBreadcrumb: React.PropTypes.func

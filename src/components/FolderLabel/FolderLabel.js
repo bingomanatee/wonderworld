@@ -1,5 +1,4 @@
 import React from 'react';
-import { IndexLink, Link } from 'react-router';
 import './FolderLabel.scss';
 import '../FolderLabel/FolderLabel';
 
