@@ -9,7 +9,6 @@ export class chapter extends React.Component {
   constructor (props) {
     super(props);
     console.log('loading articles');
-    props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
   }
 
   static contextTypes = {
@@ -17,6 +16,7 @@ export class chapter extends React.Component {
   };
 
   componentDidMount () {
+    this.props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
     this.props.loadArticles(this.props.params.chapterPath);
   }
 
@@ -42,10 +42,11 @@ export class chapter extends React.Component {
     const visitArticle = (article) => {
       this.visitArticle(article);
     };
+    const key = (article) => `article-key-${article.path}`;
     return _(this.props.articles)
       .sortBy((article) => article.revisedMoment ? -article.revisedMoment.unix() : -100000)
       .map((article) => (
-        <ArticleListItem article={article} visitArticle={visitArticle} />)).value();
+        <ArticleListItem key={key(article)} article={article} visitArticle={visitArticle}/>)).value();
   }
 
   render () {
