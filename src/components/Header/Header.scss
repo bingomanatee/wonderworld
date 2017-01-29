@@ -6,6 +6,7 @@
 }
 
 .header {
+  font-size: $textSize;
   z-index: 1000;
   display: block;
   width: 100%;
@@ -20,6 +21,11 @@
   padding: 0.5rem 3rem;
   white-space: nowrap;
   overflow: hidden;
+  color: white;
+  @media screen and (max-width: $smallSize) {
+    font-size: $smallDeviceTextSize;
+    padding: 0.25rem 2px;
+  }
   a {
     font-family: Arvo, Helvetica Neue, Helvetica, Arial, sans-serif;
     font-weight: 400;
@@ -35,11 +41,23 @@
       color: magenta;
       padding-left: 2rem;
       padding-right: 2rem;
+      @media screen and (max-width: $smallSize) {
+        font-family: Arial, Helvetica;
+        padding-left: 4px;
+        padding-right: 4px;
+      }
+      display: block; height: 100%;
     }
     &:last-child {
       .header__bullet {
         display: none;
       }
+    }
+  }
+  .header__link-static {
+    color: $textEmphasis;
+    @media screen and (max-width: $smallSize) {
+      display: none;
     }
   }
 }

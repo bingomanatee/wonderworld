@@ -23,6 +23,7 @@ class Articles {
         }
         breadcrumb.push({
           label: article.title,
+          static: true,
           path: '/articles/' + encodeURIComponent(article.path.replace(/\.md$/, ''))
         });
         article.breadcrumb = breadcrumb;
