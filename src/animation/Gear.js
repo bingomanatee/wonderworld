@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import GearShape, {HEIGHT_OF_SPOKE} from './GearShape';
+import GearShape, {HEIGHT_OF_SPOKE, DIST_BETWEEN_SPOKES} from './GearShape';
 import rebound from 'rebound';
 import {r2a, drawArc} from './angleUtils';
 import LetterDiv from './LetterDiv';
@@ -212,7 +212,7 @@ export default class Gear extends Point {
   /* ---------- properties ----------- */
 
   get spokeCount () {
-    return this.gear.spokeCount;
+    return Math.round(this.circumference / (DIST_BETWEEN_SPOKES * this.ani.spokeScale));
   }
 
   _childGears
