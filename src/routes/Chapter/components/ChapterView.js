@@ -46,7 +46,7 @@ export class chapter extends React.Component {
     return _(this.props.articles)
       .sortBy((article) => article.revisedMoment ? -article.revisedMoment.unix() : -100000)
       .map((article) => (
-        <ArticleListItem key={key(article)} article={article} visitArticle={visitArticle}/>)).value();
+        <ArticleListItem key={key(article)} article={article} visitArticle={visitArticle} />)).value();
   }
 
   render () {
