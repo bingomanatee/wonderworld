@@ -1,7 +1,7 @@
 import {SERVER_URL} from '../config';
 import Auth0Lock from 'auth0-lock';
 
-export const lock = new Auth0Lock(process.env.AUTH0_CLIENT_ID, process.env.AUTH0_DOMAIN, {
+export const lock = new Auth0Lock('_AUTH_CLIENT__', '__AUTH_DOMAIN__', {
   auth: {
     redirectUrl: `${SERVER_URL}/login`,
     responseType: 'token'
@@ -30,12 +30,12 @@ export function getIdToken() {
 const LOAD_USER = 'LOAD_USER';
 const SET_USER = 'SET_USER';
 
-export function setUser(profile) => {
+export const setUser = (profile) => {
   return {
     type: SET_USER,
     payoad: profile
   }
-}
+};
 
 export const loadUser = () => {
   return (dispatch) => {

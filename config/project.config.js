@@ -3,6 +3,8 @@ const path = require('path');
 const debug = require('debug')('app:config:project');
 const argv = require('yargs').argv;
 const ip = require('ip');
+const dotenv = require('dotenv');
+dotenv.config({path: `${__dirname}/.env`});
 
 debug('Creating default configuration.');
 // ========================================================
@@ -10,6 +12,7 @@ debug('Creating default configuration.');
 // ========================================================
 const config = {
   env : process.env.NODE_ENV || 'development',
+
 
   // ----------------------------------
   // Project Structure
@@ -78,6 +81,12 @@ config.globals = {
   'process.env'  : {
     'NODE_ENV' : JSON.stringify(config.env)
   },
+  // ----------------------------------
+  // For auth
+  // ----------------------------------
+
+  __AUTH_CLIENT__ : process.env.AUTH0_CLIENT_ID,
+  __AUTH_DOMAIN__ : process.env.AUTH0_DOMAIN,
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',

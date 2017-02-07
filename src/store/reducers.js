@@ -7,6 +7,7 @@ export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
     breadcrumb: breadcrumbReducer,
+    auth: authReducer,
     ...asyncReducers
   });
 };
