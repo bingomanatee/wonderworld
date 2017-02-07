@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux';
 import locationReducer from './location';
 import breadcrumbReducer from './breadcrumb';
+import authReducer from './auth';
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({

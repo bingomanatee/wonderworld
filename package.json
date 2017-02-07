@@ -78,6 +78,7 @@
   "dependencies": {
     "@bockit/hex-coordinates": "0.0.1",
     "@bockit/hex-round": "^1.0.1",
+    "auth0-lock": "^10.11.0",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-runtime": "^6.15.0",
