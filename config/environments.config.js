@@ -10,7 +10,7 @@ module.exports = {
   // http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
   development : (config) => ({
     compiler_public_path : `http://${config.server_host}:${config.server_port}/`,
-    globals: config.globals
+    globals: Object.assign({}, config.globals, {CLIENT_URL: '"http://localhost:3111"'})
   }),
 
   // ======================================================

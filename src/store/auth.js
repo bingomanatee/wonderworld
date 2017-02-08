@@ -1,9 +1,9 @@
 import {SERVER_URL} from '../config';
 import Auth0Lock from 'auth0-lock';
 
-export const lock = new Auth0Lock('_AUTH_CLIENT__', '__AUTH_DOMAIN__', {
+export const lock = new Auth0Lock(AUTH_CLIENT, AUTH_DOMAIN, {
   auth: {
-    redirectUrl: `${SERVER_URL}/login`,
+    redirectUrl: `${CLIENT_URL}`,
     responseType: 'token'
   }
 });
@@ -11,7 +11,7 @@ export const lock = new Auth0Lock('_AUTH_CLIENT__', '__AUTH_DOMAIN__', {
 export function getIdToken() {
   // First, check if there is already a JWT in local storage
   var idToken = localStorage.getItem('id_token');
-  var authHash = this.lock.parseHash(window.location.hash);
+  var authHash = lock.parseHash(window.location.hash);
   // If there is no JWT in local storage and there is one in the URL hash,
   // save it in local storage
   if (!idToken && authHash) {

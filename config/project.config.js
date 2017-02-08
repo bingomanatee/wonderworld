@@ -85,8 +85,10 @@ config.globals = {
   // For auth
   // ----------------------------------
 
-  __AUTH_CLIENT__ : process.env.AUTH0_CLIENT_ID,
-  __AUTH_DOMAIN__ : process.env.AUTH0_DOMAIN,
+  'AUTH_CLIENT'  : `"${process.env.AUTH0_CLIENT_ID}"`,
+  'AUTH_DOMAIN'  : `"${process.env.AUTH0_DOMAIN}"`,
+  'SERVER_URL'   : `"http://35.160.59.115"`,
+  'CLIENT_URL'   : `"http://www.wonderlandlabs.com"`,
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',
