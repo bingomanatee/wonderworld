@@ -3,8 +3,7 @@ const path = require('path');
 const debug = require('debug')('app:config:project');
 const argv = require('yargs').argv;
 const ip = require('ip');
-const dotenv = require('dotenv');
-dotenv.config({path: `${__dirname}/.env`});
+eval('debugger');
 
 debug('Creating default configuration.');
 // ========================================================

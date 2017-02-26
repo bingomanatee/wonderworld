@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const project = require('./project.config');
 const debug = require('debug')('app:config:webpack');
-
+const Dotenv = require('dotenv-webpack');
 const __DEV__ = project.globals.__DEV__;
 const __PROD__ = project.globals.__PROD__;
 const __TEST__ = project.globals.__TEST__;
@@ -54,6 +54,10 @@ webpackConfig.externals['react/addons'] = true;
 // Plugins
 // ------------------------------------
 webpackConfig.plugins = [
+  new Dotenv({
+    path: __dirname + '/../.env', // if not simply .env
+    // safe: true // lets load the .env.example file as well
+  }),
   new webpack.DefinePlugin(project.globals),
   new HtmlWebpackPlugin({
     template : project.paths.client('index.html'),
