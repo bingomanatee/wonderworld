@@ -4,12 +4,12 @@ import '../FolderLabel/FolderLabel';
 
 export class FolderLabel extends React.Component {
   render () {
-    if (!this.props.article.folder) {
+    if (!this.props.article.directory) {
       return null;
     }
     return <div className='article-list-item-folder'>
       <div className='article-list-item-folder__inner'>
-        {this.props.article.folder.replace('_', ' ')}:
+        {this.props.article.directory.replace(/^articles\//i, '').replace('_', ' ')}
       </div>
     </div>;
   }

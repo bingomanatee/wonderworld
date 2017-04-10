@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from 'react';
-import {browserHistory, Router} from 'react-router';
+import {hashHistory, Router} from 'react-router';
 import {Provider} from 'react-redux';
 import Gears from '../animation/Gears';
 
@@ -24,7 +24,7 @@ class AppContainer extends Component {
     return (
       <Provider store={store}>
         <div className='content-frame'>
-          <Router history={browserHistory} children={routes} />
+          <Router history={hashHistory} children={routes} />
         </div>
       </Provider>
     );

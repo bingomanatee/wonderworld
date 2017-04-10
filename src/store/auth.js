@@ -1,31 +1,4 @@
-import {SERVER_URL} from '../config';
-import Auth0Lock from 'auth0-lock';
-
-export const lock = new Auth0Lock(AUTH_CLIENT, AUTH_DOMAIN, {
-  auth: {
-    redirectUrl: `${CLIENT_URL}`,
-    responseType: 'token'
-  }
-});
-
-export function getIdToken() {
-  // First, check if there is already a JWT in local storage
-  var idToken = localStorage.getItem('id_token');
-  var authHash = lock.parseHash(window.location.hash);
-  // If there is no JWT in local storage and there is one in the URL hash,
-  // save it in local storage
-  if (!idToken && authHash) {
-    if (authHash.id_token) {
-      idToken = authHash.id_token
-      localStorage.setItem('id_token', authHash.id_token);
-    }
-    if (authHash.error) {
-      // Handle any error conditions
-      console.log("Error signing in", authHash);
-    }
-  }
-  return idToken;
-}
+import auth from '../utils/auth';
 
 const LOAD_USER = 'LOAD_USER';
 const SET_USER = 'SET_USER';
@@ -33,19 +6,16 @@ const SET_USER = 'SET_USER';
 export const setUser = (profile) => {
   return {
     type: SET_USER,
-    payoad: profile
+    payload: profile
   }
 };
 
 export const loadUser = () => {
   return (dispatch) => {
-    let token = getIdToken();
-    if (!token) {
-      dispatch(setUser(false));
+    if (auth.loggedIn()) {
+      dispatch(setUser(auth.getProfile()));
     } else {
-      lock.getProfile(token, (err, profile) => {
-        dispatch.setUser(profile || false);
-      });
+      dispatch(setUser(false));
     }
   }
 };
@@ -54,14 +24,15 @@ export const loadUser = () => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [SET_USER]: (state, action) => Object.assign({}, state, {profile: action.payload})
+  [SET_USER]: (state, action) => Object.assign({}, state, {profile: action.payload, loggedIn: !!action.payload})
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-  profile: {}
+  profile: auth.getProfile(),
+  loggedIn: !!auth.getProfile()
 };
 export default function userReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];

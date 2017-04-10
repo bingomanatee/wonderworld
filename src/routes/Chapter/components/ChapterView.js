@@ -21,14 +21,14 @@ export class chapter extends React.Component {
   }
 
   folderLabel (article) {
-    if (!article.folder) {
+    if (!article.directory) {
       return '';
     }
-    return <b>{article.folder.replace('_', ' ')}:</b>;
+    return <b>{article.directory.replace('_', ' ')}:</b>;
   }
 
   visitArticle (article) {
-    this.context.router.push(`/article/${encodeURIComponent(article.path.replace(/\.md$/, ''))}`);
+    this.context.router.push(`/article/${encodeURIComponent(article.path)}`);
   }
 
   articlesList () {

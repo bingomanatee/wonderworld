@@ -15,10 +15,10 @@ export class ArticleView extends React.Component {
   }
 
   folderLabel (article) {
-    if (!article.folder) {
+    if (!article.directory) {
       return '';
     }
-    return <b>{article.folder}:</b>;
+    return <b>{article.directory}:</b>;
   }
 
   content () {
