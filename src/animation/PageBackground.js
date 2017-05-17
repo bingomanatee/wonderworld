@@ -6,13 +6,13 @@ import _ from 'lodash';
 const SIZE_PER_TILE = 20;
 const SHADOW_SCALE = 0.015;
 const CRAWLER_COLORS = [
-  'hsl(180,40%,40%)',
-  'hsl(190,40%,40%)',
-  'hsl(200,40%,40%)',
-  'hsl(210,40%,40%)',
-  'hsl(220,40%,40%)'
+  'hsl(180,20%,40%)',
+  'hsl(190,20%,40%)',
+  'hsl(200,20%,40%)',
+  'hsl(210,20%,40%)',
+  'hsl(220,20%,40%)'
 ];
-const GREENS = _.map(_.range(0, 255), (green) => `hsl(200,${_.random(35, 45)}%, ${Math.min(100, green / 2)}%)`);
+const GREENS = _.map(_.range(0, 255), (green) => `hsl(190,${30}%, ${Math.min(100, 5 + 130 * (Math.sqrt(green/255)))}%)`);
 const MAX_TAILS = 20;
 const MAX_LIFE = 40;
 const MAX_CRAWLERS = 12;
@@ -220,7 +220,7 @@ export default class PageBackground {
 
         let last = _scaleShadowPoint(hex[5]);
 
-        shape.graphics.beginFill(`rgba(0,0,0,${0.125 * this.ani.spokeScale})`)
+        shape.graphics.beginFill(`rgba(0,0,0,${0.1})`)
           .moveTo(last.x, last.y);
         _.each(hex, (p) => {
           let pShadow = _scaleShadowPoint(p);

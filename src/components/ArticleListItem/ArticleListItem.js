@@ -16,7 +16,7 @@ export const ArticleListItem = (props) => (
       </div>
       <div className='article-list-item-description-group'>
         <div className='article-list-item-intro'>
-          <p className='article-list-item-intro__inner'>{props.article.intro || ' '} </p>
+          <p className='article-list-item-intro__inner'>{props.article.description || ' '} </p>
         </div>
         <div className='article-list-item-time'>
           <span className='article-list-item-time__inner'>{props.article.revisedMoment.fromNow() }</span>

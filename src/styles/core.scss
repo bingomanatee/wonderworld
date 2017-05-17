@@ -98,6 +98,8 @@ canvas.background {
 
   .content-frame__title {
     text-align: center;
-    color: $textEmphasis;
+    color: white;
+    font-family: $avro;
+    text-transform: uppercase;
   }
 }

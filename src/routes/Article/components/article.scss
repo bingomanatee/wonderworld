@@ -1,35 +1,36 @@
 @import '../../../styles/base';
 
 .article {
-  max-width: $contentMaxWidth;
-  * {
-    font-family: $textFont;
-  }
-  h1 {
-    font-family: $titleFont;
-    text-align: center;
-    margin: 1rem;
-    font-size: 2rem;
-    color: $textEmphasis;
-  }
-  .article__intro {
-    font-size: 1.5rem;
-    font-weight: 200;
-    text-align: center;
-    color: $introColor;
-    font-size: $textSize;
-  }
+  font-family: $textFont;
   .article__content {
+    max-width: $contentMaxWidth;
+    .article__intro {
+      font-size: 1.5rem;
+      font-weight: 200;
+      text-align: center;
+      color: $introColor;
+      font-size: $textSize;
+    }
+    h1.article-title {
+      font-family: $titleFont;
+      font-size: 3em;
+      text-align: center;
+      margin: 1rem;
+      font-family: $avro;
+    }
     background: white;
+
+    -webkit-box-shadow: 0px 0px 22px 6px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 0px 0px 22px 6px rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 22px 6px rgba(255, 255, 255, 1);
+
     margin-left: 2rem;
     margin-right: 2rem;
-    margin-top: 1.5rem;
-    border-radius: 3rem;
-    padding: 3rem;
+    padding: 1rem 2rem;
     @media screen and (max-width: $smallSize) {
       margin: 0;
       border-radius: 0;
-      padding: 2rem;
+      padding: 1rem;
       p, div {
         font-size: $smallDeviceTextSize;
         line-height: $smallDeviceTextSize * $leadingScale;
@@ -47,14 +48,14 @@
       }
     }
     h1, h2, h3, h4 {
-      font-family: $titleFont;
-      font-size: $textSize * $headlineScale;
+      font-family: $avro;
+      font-size: 1.5em;
       font-weight: 800;
       text-align: center;
-      margin: 0;
       padding: 0;
-      padding-top: $headlineMargin;
-      padding-bottom: $headlineMargin;
+      margin-top: $headlineMargin;
+      margin-bottom: $headlineMargin;
+      padding-bottom: 0.5rem;
     }
 
     h1, h2 {
@@ -69,13 +70,13 @@
 
     h3, h4, h5 {
       text-align: left;
-      font-weight: 200;
-      font-size: $textSize * 1.25;
+      font-weight: 400;
+      font-size: 1.33em;
       color: $minorArticleHeadline;
     }
 
     h4, h5 {
-      font-style: italic;
+      font-weight: 300;
     }
 
     p, div {
@@ -99,6 +100,7 @@
       padding-bottom: 1.5rem;
       background-color: $codeBackgroundColor;
       display: block;
+      white-space: pre-wrap;
       overflow-x: auto;
     }
     code {

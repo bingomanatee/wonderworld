@@ -14,10 +14,10 @@ For example:
 /* ----------- proportion/scaling ------------ */
 
 $allCapsScale: 0.66;
-$bulletScale: 0.9;
+$bulletScale: 1.05;
 $leadingScale: 1.333;
 $headlineScale: 1.2;
-$headlineMargin: 0.75rem;
+$headlineMargin: 1.5rem;
 
 /* ----------- responsive breakpoints --------------- */
 
@@ -27,17 +27,18 @@ $contentMaxWidth: 1400px;
 
 /* ------------ colors ------------------- */
 
+$headerBorderColor: hsla(253, 82%, 19%, 0.5);
 $majorArticleHeadline: hsl(280, 20%, 25%);
-$minorArticleHeadline: hsl(280, 80%, 40%);
+$minorArticleHeadline: hsl(275, 16%, 27%);
 $textColor: hsl(200, 62%, 80%);
-$textEmphasis: hsl(200, 100%, 80%);
-$introColor: hsl(0, 0%, 100%);
+$textEmphasis: #e293dd; /* hsl(200, 100%, 80%); */
+$introColor: hsl(0, 0%, 33%);
 
 $pageBackground: hsl(200, 50%, 10%);
-$secondaryText2: hsl(200, 15%, 66%);
+$secondaryText2: hsl(198, 29%, 82%);
 $secondaryText: hsl(200, 25%, 85%);
 
-$articleBorderColor: hsl(296, 35%, 68%);
+$articleBorderColor: hsl(292, 38%, 74%);
 $articleHeadlineBorderColor: saturate($articleBorderColor, 0.2);
 
 $codeBackgroundBorderColor: hsl(200, 80%, 60%);
@@ -45,6 +46,7 @@ $codeBackgroundColor: hsl(200, 100%, 98%);
 
 /* ---------------- text ------------------ */
 
+$avro: Arvo, Helvetica Neue, Helvetica, Arial, sans-serif;
 $smallDeviceTextSize: 1rem;
 
 $textCode: 'Anonymous Pro', 'Courier New', Courier, monospace;

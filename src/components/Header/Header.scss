@@ -15,19 +15,21 @@
   justify-content: flex-start;
   flex-grow: 0;
   flex-shrink: 0;
-  border-top: 1px solid rgba(255, 51, 255, 0.5);
-  border-bottom: 1px solid rgba(255, 51, 255, 0.5);
+  border-top: 1px solid $headerBorderColor;
+  border-bottom: 1px solid $headerBorderColor;
   margin-top: 0.5rem;
   padding: 0.5rem 3rem;
   white-space: nowrap;
   overflow: hidden;
   color: white;
+  background-color: hsla(0, 0%, 0%, 0.333);
+
   @media screen and (max-width: $smallSize) {
     font-size: $smallDeviceTextSize;
     padding: 0.25rem 2px;
   }
   a {
-    font-family: Arvo, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-family: $avro;
     font-weight: 400;
     font-size: 1rem;
     color: white;
@@ -56,6 +58,8 @@
   }
   .header__link-static {
     color: $textEmphasis;
+    font-family: $avro;
+    text-transform: uppercase;
     @media screen and (max-width: $smallSize) {
       display: none;
     }
