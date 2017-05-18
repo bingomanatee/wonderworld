@@ -3,25 +3,25 @@ import './article.scss';
 import marked from 'marked';
 export class ArticleView extends React.Component {
 
-  constructor(props) {
+  constructor (props) {
     super(props);
     console.log('loading articles');
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.props.setBreadcrumb([{label: 'Home', path: '/homepage'}]);
     console.log('getting article', this.props.params.articlepath);
     this.props.loadArticle(this.props.params.articlepath);
   }
 
-  folderLabel(article) {
+  folderLabel (article) {
     if (!article.directory) {
       return '';
     }
     return <b>{article.directory}:</b>;
   }
 
-  content() {
+  content () {
     if (!(this.props.article && this.props.article.content)) {
       return {__html: '<p>loading...</p>'};
     } else {
@@ -29,7 +29,7 @@ export class ArticleView extends React.Component {
     }
   }
 
-  render() {
+  render () {
     console.log('props:', this.props);
     return (
       <div className='content-frame__scrolling'>

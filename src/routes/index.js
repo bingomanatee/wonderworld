@@ -3,6 +3,7 @@ import CoreLayout from '../layouts/CoreLayout/CoreLayout';
 import CounterRoute from './Counter';
 import HomepageRoute from './Homepage';
 import ArticleRoute from './Article';
+import LoginRoute from './Login';
 import ChapterRoute from './Chapter';
 
 /*  Note: Instead of using JSX, we recommend using react-router
@@ -16,7 +17,8 @@ export const createRoutes = (store) => ({
     CounterRoute(store),
     HomepageRoute(store),
     ArticleRoute(store),
-    ChapterRoute(store)
+    ChapterRoute(store),
+    LoginRoute(store)
   ]
 });
 

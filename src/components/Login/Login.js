@@ -20,8 +20,8 @@ export const Login = (props) => (
           <img src={props.profile.picture} width="30" height="30"/>
           <img src="/svg/user-in.svg"/>
         </div>) : (<img src="/svg/user-out.svg"/>)}
-      </div>
     </div>
+  </div>
 );
 Login.propTypes = {
   profile: PropTypes.object

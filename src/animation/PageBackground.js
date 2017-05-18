@@ -171,11 +171,11 @@ export default class PageBackground {
         hex.green += add;
         hex.green = _.clamp(hex.green, 0, 255);
         _.each(neighbors, (neighbor) => {
-          if (neighbor) {
-            neighbor.green += add;
-            neighbor.green = _.clamp(neighbor.green, 0, 255);
+            if (neighbor) {
+              neighbor.green += add;
+              neighbor.green = _.clamp(neighbor.green, 0, 255);
+            }
           }
-        }
         );
       }
     }

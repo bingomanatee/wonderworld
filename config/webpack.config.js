@@ -9,6 +9,7 @@ const Dotenv = require('dotenv-webpack');
 const __DEV__ = project.globals.__DEV__;
 const __PROD__ = project.globals.__PROD__;
 const __TEST__ = project.globals.__TEST__;
+const path = require('path');
 
 debug('Creating configuration.');
 const webpackConfig = {
@@ -55,7 +56,7 @@ webpackConfig.externals['react/addons'] = true;
 // ------------------------------------
 webpackConfig.plugins = [
   new Dotenv({
-    path: __dirname + '/../.env', // if not simply .env
+    path: path.resolve(__dirname, '/../.env') //,  if not simply .env
     // safe: true // lets load the .env.example file as well
   }),
   new webpack.DefinePlugin(project.globals),

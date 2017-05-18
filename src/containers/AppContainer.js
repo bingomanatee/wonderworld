@@ -24,7 +24,7 @@ class AppContainer extends Component {
     return (
       <Provider store={store}>
         <div className='content-frame'>
-          <Router history={hashHistory} children={routes} />
+          <Router history={hashHistory} children={routes}/>
         </div>
       </Provider>
     );

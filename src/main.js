@@ -18,7 +18,7 @@ let render = () => {
   const routes = require('./routes/index').default(store);
 
   ReactDOM.render(
-    <AppContainer store={store} routes={routes} />,
+    <AppContainer store={store} routes={routes}/>,
     MOUNT_NODE
   );
 };
@@ -31,7 +31,7 @@ if (__DEV__) {
     const renderError = (error) => {
       const RedBox = require('redbox-react').default;
 
-      ReactDOM.render(<RedBox error={error} />, MOUNT_NODE);
+      ReactDOM.render(<RedBox error={error}/>, MOUNT_NODE);
     };
 
     // Wrap render in try/catch

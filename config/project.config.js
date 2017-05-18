@@ -3,7 +3,6 @@ const path = require('path');
 const debug = require('debug')('app:config:project');
 const argv = require('yargs').argv;
 const ip = require('ip');
-eval('debugger');
 
 debug('Creating default configuration.');
 // ========================================================
@@ -11,7 +10,6 @@ debug('Creating default configuration.');
 // ========================================================
 const config = {
   env : process.env.NODE_ENV || 'development',
-
 
   // ----------------------------------
   // Project Structure
@@ -27,7 +25,7 @@ const config = {
   // Server Configuration
   // ----------------------------------
   server_host : ip.address(), // use string 'localhost' to prevent exposure on local network
-  server_port : process.env.PORT || 3111,
+  server_port : process.env.PORT || 80,
 
   // ----------------------------------
   // Compiler Configuration
@@ -86,8 +84,8 @@ config.globals = {
 
   'AUTH_CLIENT'  : `"${process.env.AUTH0_CLIENT_ID}"`,
   'AUTH_DOMAIN'  : `"${process.env.AUTH0_DOMAIN}"`,
-  'SERVER_URL'   : `"http://35.160.59.115"`,
-  'CLIENT_URL'   : `"http://www.wonderlandlabs.com"`,
+  'SERVER_URL'   : `"http://45.33.34.18/"`,
+  'CLIENT_URL'   : `"http://45.33.34.18/"`,
   'NODE_ENV'     : config.env,
   '__DEV__'      : config.env === 'development',
   '__PROD__'     : config.env === 'production',

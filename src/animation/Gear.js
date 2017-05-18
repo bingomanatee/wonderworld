@@ -280,6 +280,7 @@ export default class Gear extends Point {
   get circumference () {
     return this.diameter * Math.PI;
   }
+
   _parentGear
 
   get parentGear () {

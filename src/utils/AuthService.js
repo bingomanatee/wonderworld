@@ -1,10 +1,10 @@
-import { EventEmitter } from 'events'
-import { isTokenExpired } from './jwtHelper'
+import {EventEmitter} from 'events'
+import {isTokenExpired} from './jwtHelper'
 import Auth0Lock from 'auth0-lock'
-import { browserHistory } from 'react-router'
+import {browserHistory} from 'react-router'
 
 export default class AuthService extends EventEmitter {
-  constructor(clientId, domain) {
+  constructor (clientId, domain) {
     super()
     // Configure Auth0
     this.lock = new Auth0Lock(clientId, domain, {
@@ -21,7 +21,7 @@ export default class AuthService extends EventEmitter {
     this.login = this.login.bind(this)
   }
 
-  _doAuthentication(authResult){
+  _doAuthentication (authResult) {
     // Saves the user token
     this.setToken(authResult.idToken)
     // navigate to the home route
@@ -36,46 +36,46 @@ export default class AuthService extends EventEmitter {
     })
   }
 
-  _authorizationError(error){
+  _authorizationError (error) {
     // Unexpected authentication error
     console.log('Authentication Error', error)
   }
 
-  login() {
+  login () {
     // Call the show method to display the widget.
     this.lock.show()
   }
 
-  loggedIn(){
+  loggedIn () {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken()
     return !!token && !isTokenExpired(token)
   }
 
-  setProfile(profile){
+  setProfile (profile) {
     // Saves profile data to localStorage
     localStorage.setItem('profile', JSON.stringify(profile))
     // Triggers profile_updated event to update the UI
     this.emit('profile_updated', profile)
   }
 
-  getProfile(){
+  getProfile () {
     // Retrieves the profile data from localStorage
     const profile = localStorage.getItem('profile')
     return profile ? JSON.parse(localStorage.profile) : {}
   }
 
-  setToken(idToken){
+  setToken (idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken)
   }
 
-  getToken(){
+  getToken () {
     // Retrieves the user token from localStorage
     return localStorage.getItem('id_token')
   }
 
-  logout(){
+  logout () {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
     localStorage.removeItem('profile');

@@ -5,7 +5,7 @@ import './Header.scss';
 function linkClasses (crumb) {
   const classes = ['header__link'];
   if (crumb.static) {
-    classes.push('header__link-static')
+    classes.push('header__link-static');
   }
   return classes.join(' ');
 }

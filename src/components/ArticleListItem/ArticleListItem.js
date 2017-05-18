@@ -4,11 +4,11 @@ import {FolderLabel} from '../FolderLabel/FolderLabel';
 
 export const ArticleListItem = (props) => (
   <div className='article-list-item'
-    onClick={() => props.visitArticle(props.article)}
-    key={'article-list-item-' + props.article}>
+       onClick={() => props.visitArticle(props.article)}
+       key={'article-list-item-' + props.article}>
     <div className='article-list-item-inner'>
       <div className='article-list-item-title-group'>
-        <FolderLabel className='article-list-item-folder' article={props.article} />
+        <FolderLabel className='article-list-item-folder' article={props.article}/>
         <div className='article-list-item-title'>
           <h2 className='article-list-item-title__inner'>
             {props.article.title}</h2>
