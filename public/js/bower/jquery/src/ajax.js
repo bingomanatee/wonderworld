@@ -291,7 +291,7 @@ function ajaxConvert( s, response, jqXHR, isSuccess ) {
 
 jQuery.extend( {
 
-	// HomeView for holding the number of active queries
+	// Counter for holding the number of active queries
 	active: 0,
 
 	// Last-Modified header cache for next request

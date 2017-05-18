@@ -1694,7 +1694,7 @@ this.createjs = this.createjs||{};
 
 // constants:
 	/**
-	 * Multiplier for converting degrees to radiansFromOrigin. Used internally by Matrix2D.
+	 * Multiplier for converting degrees to radians. Used internally by Matrix2D.
 	 * @property DEG_TO_RAD
 	 * @static
 	 * @final
@@ -1923,7 +1923,7 @@ this.createjs = this.createjs||{};
 	/**
 	 * Applies a clockwise rotation transformation to the matrix.
 	 * @method rotate
-	 * @param {Number} angle The angle to rotate by, in degrees. To use a value in radiansFromOrigin, multiply it by `180/Math.PI`.
+	 * @param {Number} angle The angle to rotate by, in degrees. To use a value in radians, multiply it by `180/Math.PI`.
 	 * @return {Matrix2D} This matrix. Useful for chaining method calls.
 	 **/
 	p.rotate = function(angle) {
@@ -1944,7 +1944,7 @@ this.createjs = this.createjs||{};
 	/**
 	 * Applies a skew transformation to the matrix.
 	 * @method skew
-	 * @param {Number} skewX The amount to skew horizontally in degrees. To use a value in radiansFromOrigin, multiply it by `180/Math.PI`.
+	 * @param {Number} skewX The amount to skew horizontally in degrees. To use a value in radians, multiply it by `180/Math.PI`.
 	 * @param {Number} skewY The amount to skew vertically in degrees.
 	 * @return {Matrix2D} This matrix. Useful for chaining method calls.
 	*/
@@ -3618,7 +3618,7 @@ this.createjs = this.createjs||{};
 	 * See {{#crossLink "Graphics/append"}}{{/crossLink}} for more info on creating custom commands.
 	 *
 	 * <h4>Tiny API</h4>
-	 * The Graphics class also includes a "tiny API", which is one or two-letterShape methods that are shortcuts for all of the
+	 * The Graphics class also includes a "tiny API", which is one or two-letter methods that are shortcuts for all of the
 	 * Graphics methods. These methods are great for creating compact instructions, and is used by the Toolkit for CreateJS
 	 * to generate readable code. All tiny methods are marked as protected, so you can view them by enabling protected
 	 * descriptions in the docs.
@@ -4050,8 +4050,8 @@ this.createjs = this.createjs||{};
 	 * @param {Number} x
 	 * @param {Number} y
 	 * @param {Number} radius
-	 * @param {Number} startAngle Measured in radiansFromOrigin.
-	 * @param {Number} endAngle Measured in radiansFromOrigin.
+	 * @param {Number} startAngle Measured in radians.
+	 * @param {Number} endAngle Measured in radians.
 	 * @param {Boolean} anticlockwise
 	 * @return {Graphics} The Graphics instance the method is called on (useful for chaining calls.)
 	 * @chainable
@@ -4777,8 +4777,8 @@ this.createjs = this.createjs||{};
 	 * @param {Number} x
 	 * @param {Number} y
 	 * @param {Number} radius
-	 * @param {Number} startAngle Measured in radiansFromOrigin.
-	 * @param {Number} endAngle Measured in radiansFromOrigin.
+	 * @param {Number} startAngle Measured in radians.
+	 * @param {Number} endAngle Measured in radians.
 	 * @param {Boolean} anticlockwise
 	 * @return {Graphics} The Graphics instance the method is called on (useful for chaining calls.)
 	 * @protected
