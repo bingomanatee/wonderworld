@@ -18,9 +18,9 @@ export const Login = (props) => (
     <div onClick={() => auth.login()} className="login__avatar">
       {auth.loggedIn() ? (<div>
           <img src={props.profile.picture} width="30" height="30"/>
-          <img src="/svg/user-in.svg"/>
         </div>) : (<img src="/svg/user-out.svg"/>)}
     </div>
+    <p className="login__text">  {auth.loggedIn() ? 'logged in' : ''}</p>
   </div>
 );
 Login.propTypes = {

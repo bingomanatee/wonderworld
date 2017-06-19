@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
 import './Header.scss';
+import Login from '../../containers/LoginContainer';
 
 function linkClasses (crumb) {
   const classes = ['header__link'];
@@ -16,11 +17,15 @@ function crumbInner (crumb) {
 
 export const Header = (props) => (
   <div className='header'>
+    <div className="breadcrumb">
     {props.breadcrumb.map((crumb, i) => (
       <span className={linkClasses(crumb)} key={`breadcrumb_${i}`}>
         {crumbInner(crumb)}
         <span className='header__bullet'>&#9670;</span>
       </span>))}
+    </div>
+    <div className="header__padding">&nbsp;</div>
+    <Login />
   </div>
 );
 Header.propTypes = {

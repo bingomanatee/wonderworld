@@ -18,11 +18,12 @@
   border-top: 1px solid $headerBorderColor;
   border-bottom: 1px solid $headerBorderColor;
   margin-top: 0.5rem;
-  padding: 0.5rem 3rem;
+  padding: 0 3rem;
   white-space: nowrap;
   overflow: hidden;
   color: white;
   background-color: hsla(0, 0%, 0%, 0.333);
+  border: 1px solid green;
 
   @media screen and (max-width: $smallSize) {
     font-size: $smallDeviceTextSize;
@@ -39,6 +40,7 @@
   .header__link {
     display: flex;
     flex-direction: row;
+    padding: 0.5rem 0;
     .header__bullet {
       color: magenta;
       padding-left: 2rem;
@@ -64,5 +66,9 @@
     @media screen and (max-width: $smallSize) {
       display: none;
     }
+  }
+
+  .header__padding {
+    flex-grow: 100;
   }
 }

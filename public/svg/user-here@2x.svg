@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>user-here@2x</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="2" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <filter x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="2" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="user-here">
+            <circle id="Oval" fill="#C46109" cx="20.1748047" cy="20.1748047" r="18.1748047"></circle>
+            <ellipse id="Oval-Copy" fill-opacity="0.440132473" fill="#FFBFBF" filter="url(#filter-1)" cx="20.1748047" cy="20.1748047" rx="11.9571083" ry="16.2616674"></ellipse>
+            <ellipse id="Oval-Copy" fill-opacity="0.726251132" fill="#FFBFBF" filter="url(#filter-2)" cx="20.1748047" cy="20.1748047" rx="6.69598067" ry="14.34853"></ellipse>
+            <path d="M27.8501628,29.7436449 C21.2747652,32.388337 18.2348865,30.5234316 12.043971,29.620918" id="Path-2" stroke="#FFFFFF"></path>
+            <path d="M32.6330062,14.9168306 C30.2236019,13.5208823 28.7745812,14.5593174 26.392501,14.7941036" id="Path-2-Copy" stroke="#FFFFFF"></path>
+            <path d="M14.9364858,14.9168306 C12.5270815,13.5208823 11.1299061,13.8926521 8.69598067,14.7941036" id="Path-2-Copy-2" stroke="#FFFFFF"></path>
+        </g>
+    </g>
+</svg>
