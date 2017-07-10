@@ -70,4 +70,10 @@
   .header__padding {
     flex-grow: 100;
   }
+  .header__breadcrumb {
+    flex-grow: 1000;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
 }

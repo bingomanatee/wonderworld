@@ -7,9 +7,12 @@ export default class AuthService extends EventEmitter {
   constructor (clientId, domain) {
     super()
     // Configure Auth0
+    const redirectUrl = `${window.location.origin}/#/login`;
+    console.log('redirectUrl: ', redirectUrl);
     this.lock = new Auth0Lock(clientId, domain, {
       auth: {
-        redirectUrl: `${window.location.origin}/#/login`,
+        redirect: true,
+        redirectUrl: redirectUrl,
         responseType: 'token'
       }
     })
@@ -49,6 +52,9 @@ export default class AuthService extends EventEmitter {
   loggedIn () {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken()
+    if (token && isTokenExpired(token)) {
+      console.log('token exists but is expired');
+    }
     return !!token && !isTokenExpired(token)
   }
 

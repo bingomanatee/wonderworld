@@ -18,6 +18,6 @@ export default (store) => ({
       cb(null, Login);
 
       /* Webpack named bundle   */
-    }, 'article');
+    }, 'login');
   }
 });

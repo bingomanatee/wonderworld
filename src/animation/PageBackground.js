@@ -12,7 +12,9 @@ const CRAWLER_COLORS = [
   'hsl(210,20%,40%)',
   'hsl(220,20%,40%)'
 ];
-const GREENS = _.map(_.range(0, 255), (green) => `hsl(190,${30}%, ${Math.min(100, 5 + 130 * (Math.sqrt(green/255)))}%)`);
+const GREENS = _.map(_.range(0, 255), (green) => {
+  return `hsl(190,${30}%, ${Math.min(100, 5 + 130 * (Math.sqrt(green / 255)))}%)`;
+});
 const MAX_TAILS = 20;
 const MAX_LIFE = 40;
 const MAX_CRAWLERS = 12;

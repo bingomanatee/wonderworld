@@ -17,7 +17,7 @@ function crumbInner (crumb) {
 
 export const Header = (props) => (
   <div className='header'>
-    <div className="breadcrumb">
+    <div className="header__breadcrumb">
     {props.breadcrumb.map((crumb, i) => (
       <span className={linkClasses(crumb)} key={`breadcrumb_${i}`}>
         {crumbInner(crumb)}
